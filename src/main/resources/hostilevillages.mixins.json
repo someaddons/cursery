@@ -1,0 +1,16 @@
+{
+  "required": false,
+  "package": "com.hostilevillages.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "hostilevillages.refmap.json",
+  "mixins": [
+    "ITagMixin",
+    "JigsawPatternRegistryMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}
