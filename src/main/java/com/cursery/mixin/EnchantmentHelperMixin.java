@@ -32,6 +32,6 @@ public class EnchantmentHelperMixin
             return;
         }
 
-        CurseEnchantmentHelper.checkForRandomCurse(stack, previous, enchants);
+        CurseEnchantmentHelper.checkForRandomCurse(stack, previous, EnchantmentHelper.getEnchantments(stack));
     }
 }

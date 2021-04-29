@@ -115,9 +115,15 @@ public class EventHandler
                 if (entry.getKey().isCurse())
                 {
                     event.getToolTip().add(new TranslationTextComponent("enchanted_book_cursed.desc").setStyle(Style.EMPTY.withColor(TextFormatting.DARK_PURPLE)));
+                    return;
+                }
+
+                if (!(entry.getKey().isTreasureOnly() && Cursery.config.getCommonConfig().excludeTreasure.get()))
+                {
+                    event.getToolTip().add(new TranslationTextComponent("enchanted_book.desc").setStyle(Style.EMPTY.withColor(TextFormatting.DARK_PURPLE)));
+                    return;
                 }
             }
-            event.getToolTip().add(new TranslationTextComponent("enchanted_book.desc").setStyle(Style.EMPTY.withColor(TextFormatting.DARK_PURPLE)));
         }
         else if (event.getItemStack().getItem() instanceof BlockItem && ((BlockItem) event.getItemStack().getItem()).getBlock() instanceof EnchantingTableBlock)
         {
