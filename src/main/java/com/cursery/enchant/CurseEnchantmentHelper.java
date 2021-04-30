@@ -9,9 +9,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Apply random curses upon enchanting
@@ -71,6 +69,8 @@ public class CurseEnchantmentHelper
             }
         }
 
+        final List<Integer> addedLevels = new ArrayList<>();
+
         boolean appliedCurse = false;
         // Compare enchants
         for (final Map.Entry<Enchantment, Integer> newEnchant : newEnchants.entrySet())
@@ -89,10 +89,15 @@ public class CurseEnchantmentHelper
 
             if (!newEnchant.getKey().isCurse())
             {
-                if (rollAndApplyCurseTo(stack, newLevel, levelSum - newLevel, newEnchants))
-                {
-                    appliedCurse = true;
-                }
+                addedLevels.add(newLevel);
+            }
+        }
+
+        for (final Integer newLevel : addedLevels)
+        {
+            if (rollAndApplyCurseTo(stack, newLevel, levelSum - newLevel, newEnchants))
+            {
+                appliedCurse = true;
             }
         }
 
