@@ -6,10 +6,8 @@ import com.cursery.enchant.Enchants;
 import com.cursery.enchant.PlayerVisualHelper;
 import com.cursery.enchant.curses.*;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.EnchantingTableBlock;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.LadderBlock;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.EntityType;
@@ -17,8 +15,6 @@ import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -27,9 +23,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.TickEvent;
@@ -37,15 +30,12 @@ import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
-
-import java.util.Map;
 
 /**
  * Handler to catch server tick events
@@ -103,32 +93,6 @@ public class EventHandler
         // Save the combination to add some visual output for the player
         CurseEnchantmentHelper.notifyStack = event.getItem();
         CurseEnchantmentHelper.notifyPlayer = (ServerPlayerEntity) player;
-    }
-
-    @SubscribeEvent
-    public static void on(ItemTooltipEvent event)
-    {
-        if (event.getItemStack().getItem() instanceof EnchantedBookItem)
-        {
-            for (final Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.getEnchantments(event.getItemStack()).entrySet())
-            {
-                if (entry.getKey().isCurse())
-                {
-                    event.getToolTip().add(new TranslationTextComponent("enchanted_book_cursed.desc").setStyle(Style.EMPTY.withColor(TextFormatting.DARK_PURPLE)));
-                    return;
-                }
-
-                if (!(entry.getKey().isTreasureOnly() && Cursery.config.getCommonConfig().excludeTreasure.get()))
-                {
-                    event.getToolTip().add(new TranslationTextComponent("enchanted_book.desc").setStyle(Style.EMPTY.withColor(TextFormatting.DARK_PURPLE)));
-                    return;
-                }
-            }
-        }
-        else if (event.getItemStack().getItem() instanceof BlockItem && ((BlockItem) event.getItemStack().getItem()).getBlock() instanceof EnchantingTableBlock)
-        {
-            event.getToolTip().add(new TranslationTextComponent("enchanted_table.desc").setStyle(Style.EMPTY.withColor(TextFormatting.DARK_PURPLE)));
-        }
     }
 
     private static BlockPos lastPos = BlockPos.ZERO;
