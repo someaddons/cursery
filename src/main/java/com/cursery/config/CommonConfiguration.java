@@ -8,6 +8,7 @@ import java.util.List;
 public class CommonConfiguration
 {
     public final ForgeConfigSpec.ConfigValue<List<? extends String>> excludedCUrses;
+    public final ForgeConfigSpec.ConfigValue<List<? extends String>> disabledItems;
     public final ForgeConfigSpec.ConfigValue<Boolean>                excludeTreasure;
     public final ForgeConfigSpec.ConfigValue<Integer>                basecursechance;
     public final ForgeConfigSpec                                     ForgeConfigSpecBuilder;
@@ -29,6 +30,11 @@ public class CommonConfiguration
 
         builder.comment("Base curse application chance, scales up the more enchants the item has. Default:15 %");
         basecursechance = builder.defineInRange("basecursechance", 15, 1, 100);
+
+        builder.comment("List of items to disable, they get replaced by air e.g. [\"minecraft:elytra\"]");
+        disabledItems = builder.defineList("disabledItems",
+          Collections.EMPTY_LIST
+          , e -> e instanceof String && ((String) e).contains(":"));
 
         // Escapes the current category level
         builder.pop();

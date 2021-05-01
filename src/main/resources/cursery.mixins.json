@@ -1,11 +1,12 @@
 {
-  "required": true,
+  "required": false,
   "package": "com.cursery.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "cursery.refmap.json",
   "mixins": [
     "ItemStackMixin",
-    "EnchantmentHelperMixin"
+    "EnchantmentHelperMixin",
+    "AttributeModifierManagerMixin"
   ],
   "client": [
   ],
