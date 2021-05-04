@@ -55,8 +55,6 @@ public class CurseEnchantmentHelper
             return false;
         }
 
-        // Same stack get same results
-        rand.setSeed(System.identityHashCode(stack));
         lastCursedItem = null;
 
         int levelSum = 0;
@@ -136,8 +134,19 @@ public class CurseEnchantmentHelper
         boolean appliedCurse = false;
         for (int i = 0; i < newLevel; i++)
         {
+            if (Cursery.config.getCommonConfig().debugTries.get())
+            {
+                Cursery.LOGGER.info("Rolling new curse for " + stack + " addedEnchLevels: " + newLevel + " totalEnchantLevels: " + levelSum + " chance:" + Math.min(75,
+                  Cursery.config.getCommonConfig().basecursechance.get() + levelSum - (stack.getItemEnchantability() >> 1)));
+            }
+
             if (rand.nextInt(100) < Math.min(75, Cursery.config.getCommonConfig().basecursechance.get() + levelSum - (stack.getItemEnchantability() >> 1)))
             {
+                if (Cursery.config.getCommonConfig().debugTries.get())
+                {
+                    Cursery.LOGGER.info("Trying to apply curse to: " + stack);
+                }
+
                 for (int j = 0; j < 15; j++)
                 {
                     final Enchantment curse = getRandomCurse();
@@ -149,6 +158,11 @@ public class CurseEnchantmentHelper
                     final int currentLevel = newEnchants.getOrDefault(curse, 0);
                     if (currentLevel < curse.getMaxLevel() && curse.canEnchant(stack) && isCompatibleWithAll(curse, newEnchants))
                     {
+                        if (Cursery.config.getCommonConfig().debugTries.get())
+                        {
+                            Cursery.LOGGER.info("Applying curse " + curse.getRegistryName() + " to: " + stack);
+                        }
+
                         enchantManually(stack, curse, currentLevel + 1);
                         newEnchants.put(curse, currentLevel + 1);
                         appliedCurse = true;
@@ -174,6 +188,11 @@ public class CurseEnchantmentHelper
         {
             if (!entry.getKey().isCompatibleWith(enchantment))
             {
+                if (Cursery.config.getCommonConfig().debugTries.get())
+                {
+                    Cursery.LOGGER.info("Curse " + enchantment.getRegistryName() + " is not compatible with " + entry.getKey().getRegistryName());
+                }
+
                 return false;
             }
         }
