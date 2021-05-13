@@ -94,6 +94,10 @@ public class Configuration
                     totalCurseWeight += weight;
                     CurseEnchantmentHelper.curseWeightMap.put(enchantmentEntry.getValue(), weight);
                 }
+                else
+                {
+                    Cursery.LOGGER.info("Excluding curse: " + enchantmentEntry.getKey().getRegistryName() + " as config disables it");
+                }
             }
         }
     }

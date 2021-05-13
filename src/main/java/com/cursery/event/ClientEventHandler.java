@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class ClientEventHandler
 {
-
     @SubscribeEvent
     public static void on(ItemTooltipEvent event)
     {
