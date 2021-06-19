@@ -5,6 +5,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.registry.Registry;
@@ -51,6 +52,11 @@ public class CurseEnchantmentHelper
         }
 
         if (stack == null || stack.isEmpty() || previous == null || newEnchants == null)
+        {
+            return false;
+        }
+
+        if (stack.getItem() == Items.BOOK || stack.getItem() == Items.ENCHANTED_BOOK)
         {
             return false;
         }
