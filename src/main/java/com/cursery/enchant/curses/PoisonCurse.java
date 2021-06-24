@@ -59,6 +59,12 @@ public class PoisonCurse extends Enchantment
     }
 
     @Override
+    public boolean isTreasureOnly()
+    {
+        return true;
+    }
+
+    @Override
     public int getMinLevel()
     {
         return 1;

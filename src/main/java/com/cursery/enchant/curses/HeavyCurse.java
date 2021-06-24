@@ -52,4 +52,10 @@ public class HeavyCurse extends Enchantment
     {
         return true;
     }
+
+    @Override
+    public boolean isTreasureOnly()
+    {
+        return true;
+    }
 }

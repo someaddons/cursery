@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.thread.EffectiveSide;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
@@ -33,5 +34,11 @@ public class EnchantmentHelperMixin
         }
 
         CurseEnchantmentHelper.checkForRandomCurse(stack, previous, EnchantmentHelper.getEnchantments(stack));
+    }
+
+    @Redirect(method = "getAvailableEnchantmentResults", at = @At(value = "INVOKE", target = "Lnet/minecraft/enchantment/Enchantment;isTreasureOnly()Z"))
+    private static boolean onGetTableEnchants(final Enchantment enchantment)
+    {
+        return enchantment.isTreasureOnly() || enchantment.isCurse();
     }
 }
