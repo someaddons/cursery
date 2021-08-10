@@ -6,7 +6,8 @@
   "mixins": [
     "ItemStackMixin",
     "EnchantmentHelperMixin",
-    "AttributeModifierManagerMixin"
+    "AttributeModifierManagerMixin",
+    "AbstractRepairContainerMixin"
   ],
   "client": [
   ],
