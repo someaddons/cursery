@@ -1,14 +1,14 @@
 package com.cursery.event;
 
 import com.cursery.Cursery;
-import net.minecraft.block.EnchantingTableBlock;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.block.EnchantmentTableBlock;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -25,20 +25,20 @@ public class ClientEventHandler
             {
                 if (entry.getKey().isCurse())
                 {
-                    event.getToolTip().add(new TranslationTextComponent("enchanted_book_cursed.desc").setStyle(Style.EMPTY.withColor(TextFormatting.DARK_PURPLE)));
+                    event.getToolTip().add(new TranslatableComponent("enchanted_book_cursed.desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
                     return;
                 }
 
                 if (!(entry.getKey().isTreasureOnly() && Cursery.config.getCommonConfig().excludeTreasure.get()))
                 {
-                    event.getToolTip().add(new TranslationTextComponent("enchanted_book.desc").setStyle(Style.EMPTY.withColor(TextFormatting.DARK_PURPLE)));
+                    event.getToolTip().add(new TranslatableComponent("enchanted_book.desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
                     return;
                 }
             }
         }
-        else if (event.getItemStack().getItem() instanceof BlockItem && ((BlockItem) event.getItemStack().getItem()).getBlock() instanceof EnchantingTableBlock)
+        else if (event.getItemStack().getItem() instanceof BlockItem && ((BlockItem) event.getItemStack().getItem()).getBlock() instanceof EnchantmentTableBlock)
         {
-            event.getToolTip().add(new TranslationTextComponent("enchanted_table.desc").setStyle(Style.EMPTY.withColor(TextFormatting.DARK_PURPLE)));
+            event.getToolTip().add(new TranslatableComponent("enchanted_table.desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
         }
     }
 }

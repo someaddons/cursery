@@ -1,10 +1,10 @@
 package com.cursery.enchant.curses;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  * Items becomes heavy, causes slowness
@@ -17,9 +17,9 @@ public class HeavyCurse extends Enchantment
     private final       String NAME_ID = "curse_heavy_enchant";
     public static final int    CHANCE  = 1000;
 
-    public HeavyCurse(final Rarity rarity, final EquipmentSlotType[] slotTypes)
+    public HeavyCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
-        super(rarity, EnchantmentType.ARMOR_CHEST, slotTypes);
+        super(rarity, EnchantmentCategory.ARMOR_CHEST, slotTypes);
         setRegistryName(NAME_ID);
     }
 

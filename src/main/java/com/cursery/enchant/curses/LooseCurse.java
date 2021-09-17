@@ -1,17 +1,17 @@
 package com.cursery.enchant.curses;
 
 import com.cursery.Cursery;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.ToolItem;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  * Chance for bows to knockback after firing
@@ -24,9 +24,9 @@ public class LooseCurse extends Enchantment
     private final       String NAME_ID = "curse_loose";
     public final static int    CHANCE  = 30;
 
-    public LooseCurse(final Rarity rarity, final EquipmentSlotType[] slotTypes)
+    public LooseCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
-        super(rarity, EnchantmentType.WEAPON, slotTypes);
+        super(rarity, EnchantmentCategory.WEAPON, slotTypes);
         setRegistryName(NAME_ID);
     }
 
@@ -39,17 +39,17 @@ public class LooseCurse extends Enchantment
     @Override
     public void doPostAttack(LivingEntity user, Entity attacker, int enchantLevel)
     {
-        if (user instanceof PlayerEntity && Cursery.rand.nextInt(CHANCE) == 0)
+        if (user instanceof Player && Cursery.rand.nextInt(CHANCE) == 0)
         {
-            ((PlayerEntity) user).drop(user.getMainHandItem(), true);
-            user.setItemInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
+            ((Player) user).drop(user.getMainHandItem(), true);
+            user.setItemInHand(InteractionHand.MAIN_HAND.MAIN_HAND, ItemStack.EMPTY);
         }
     }
 
     @Override
     public boolean canEnchant(ItemStack stack)
     {
-        return stack.getItem() instanceof BowItem || stack.getItem() instanceof ToolItem || stack.getItem() instanceof SwordItem;
+        return stack.getItem() instanceof BowItem || stack.getItem() instanceof DiggerItem || stack.getItem() instanceof SwordItem;
     }
 
     @Override

@@ -5,25 +5,25 @@ import com.cursery.enchant.CurseEnchantmentHelper;
 import com.cursery.enchant.Enchants;
 import com.cursery.enchant.PlayerVisualHelper;
 import com.cursery.enchant.curses.*;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.LadderBlock;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Explosion;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.LadderBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
@@ -35,7 +35,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.thread.EffectiveSide;
+import net.minecraftforge.fml.util.thread.EffectiveSide;
 
 /**
  * Handler to catch server tick events
@@ -71,8 +71,8 @@ public class EventHandler
                 if (event.getPlayer() != null && !event.getPlayer().level.isClientSide())
                 {
                     event.getPlayer().containerMenu.broadcastChanges();
-                    ((ServerPlayerEntity) event.getPlayer()).refreshContainer(event.getPlayer().containerMenu);
-                    PlayerVisualHelper.randomNotificationOnCurseApply((ServerPlayerEntity) event.getPlayer(), event.getItemResult());
+                    //((ServerPlayer) event.getPlayer()).refreshContainer(event.getPlayer().containerMenu);
+                    PlayerVisualHelper.randomNotificationOnCurseApply((ServerPlayer) event.getPlayer(), event.getItemResult());
                 }
             }
         }
@@ -86,13 +86,13 @@ public class EventHandler
             return;
         }
 
-        final PlayerEntity player = event.getWorld().getNearestPlayer(
-          new EntityPredicate().selector(entity -> entity instanceof ServerPlayerEntity && ((ServerPlayerEntity) entity).containerMenu != null),
+        final Player player = event.getWorld().getNearestPlayer(
+          TargetingConditions.forNonCombat().selector(entity -> entity instanceof ServerPlayer && ((ServerPlayer) entity).containerMenu != null),
           event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
 
         // Save the combination to add some visual output for the player
         CurseEnchantmentHelper.notifyStack = event.getItem();
-        CurseEnchantmentHelper.notifyPlayer = (ServerPlayerEntity) player;
+        CurseEnchantmentHelper.notifyPlayer = (ServerPlayer) player;
     }
 
     private static BlockPos lastPos = BlockPos.ZERO;
@@ -117,7 +117,7 @@ public class EventHandler
                           event.player.getY(),
                           event.player.getZ(),
                           IllusionCurse.getRandomSound(),
-                          SoundCategory.AMBIENT,
+                          SoundSource.AMBIENT,
                           0.8f,
                           1.0f,
                           false);
@@ -140,14 +140,14 @@ public class EventHandler
                 final int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.heavyCurse, armor);
                 if (level > 0)
                 {
-                    event.player.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 7 * 20 * level));
+                    event.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 7 * 20 * level));
                 }
             }
         }
 
         if (Cursery.rand.nextInt(UndeadCurse.CHANCE) == 0)
         {
-            final ItemStack armor = event.player.getItemBySlot(EquipmentSlotType.HEAD);
+            final ItemStack armor = event.player.getItemBySlot(EquipmentSlot.HEAD);
             if (!armor.isEmpty())
             {
                 final int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.undeadCurse, armor);
@@ -159,7 +159,7 @@ public class EventHandler
                     }
                     else
                     {
-                        event.player.addEffect(new EffectInstance(Effects.WATER_BREATHING, 20 * 20 * level));
+                        event.player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20 * 20 * level));
                     }
                 }
             }
@@ -167,7 +167,7 @@ public class EventHandler
 
         if (Cursery.rand.nextInt(LadderingCurse.CHANCE) == 0)
         {
-            final ItemStack armor = event.player.getItemBySlot(EquipmentSlotType.FEET);
+            final ItemStack armor = event.player.getItemBySlot(EquipmentSlot.FEET);
             if (!armor.isEmpty())
             {
                 if (EnchantmentHelper.getItemEnchantmentLevel(Enchants.ladderingCurse, armor) > 0)
@@ -176,7 +176,7 @@ public class EventHandler
 
                     if (state.getBlock() instanceof LadderBlock)
                     {
-                        final Direction facing = state.getValue(HorizontalBlock.FACING).getOpposite();
+                        final Direction facing = state.getValue(HorizontalDirectionalBlock.FACING).getOpposite();
 
                         event.player.hurtMarked = true;
                         event.player
@@ -199,13 +199,13 @@ public class EventHandler
 
         if (Cursery.rand.nextInt(ExplosiveToolCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.explosiveToolCurse, event.getPlayer().getMainHandItem()) > 0)
         {
-            event.getPlayer().level.explode(null, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), 3, false, Explosion.Mode.DESTROY);
+            event.getPlayer().level.explode(null, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), 3, false, Explosion.BlockInteraction.DESTROY);
         }
 
         if (Cursery.rand.nextInt(LooseCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.looseCurse, event.getPlayer().getMainHandItem()) > 0)
         {
-            ((PlayerEntity) event.getPlayer()).drop(event.getPlayer().getMainHandItem(), true);
-            event.getPlayer().setItemInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
+            ((Player) event.getPlayer()).drop(event.getPlayer().getMainHandItem(), true);
+            event.getPlayer().setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         }
 
         final int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.electrifiedToolCurse, event.getPlayer().getMainHandItem());
@@ -214,11 +214,11 @@ public class EventHandler
             BlockPos blockpos = event.getPlayer().blockPosition();
             if (event.getPlayer().level.canSeeSky(blockpos))
             {
-                LightningBoltEntity lightningboltentity = EntityType.LIGHTNING_BOLT.create(event.getPlayer().level);
+                LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(event.getPlayer().level);
                 if (lightningboltentity != null)
                 {
-                    lightningboltentity.moveTo(Vector3d.atBottomCenterOf(blockpos));
-                    lightningboltentity.setCause((ServerPlayerEntity) event.getPlayer());
+                    lightningboltentity.moveTo(Vec3.atBottomCenterOf(blockpos));
+                    lightningboltentity.setCause((ServerPlayer) event.getPlayer());
                     event.getPlayer().level.addFreshEntity(lightningboltentity);
                 }
             }
@@ -249,8 +249,8 @@ public class EventHandler
 
         if (Cursery.rand.nextInt(LooseCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.looseCurse, event.getPlayer().getMainHandItem()) > 0)
         {
-            ((PlayerEntity) event.getPlayer()).drop(event.getPlayer().getMainHandItem(), true);
-            event.getPlayer().setItemInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
+            ((Player) event.getPlayer()).drop(event.getPlayer().getMainHandItem(), true);
+            event.getPlayer().setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         }
     }
 
@@ -262,7 +262,7 @@ public class EventHandler
             return;
         }
 
-        final int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.steelFeet, event.getEntityLiving().getItemBySlot(EquipmentSlotType.FEET));
+        final int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.steelFeet, event.getEntityLiving().getItemBySlot(EquipmentSlot.FEET));
         if (level > 0)
         {
             event.setDistance(event.getDistance() + 1.7f);

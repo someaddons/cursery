@@ -1,12 +1,12 @@
 package com.cursery.enchant.curses;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  * Reduces mining speed of tools
@@ -19,9 +19,9 @@ public class SlownessCurse extends Enchantment
     private final       String NAME_ID = "curse_slowness";
     public final static int    CHANCE  = 30;
 
-    public SlownessCurse(final Rarity rarity, final EquipmentSlotType[] slotTypes)
+    public SlownessCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
-        super(rarity, EnchantmentType.WEAPON, slotTypes);
+        super(rarity, EnchantmentCategory.WEAPON, slotTypes);
         setRegistryName(NAME_ID);
     }
 
@@ -39,7 +39,7 @@ public class SlownessCurse extends Enchantment
     @Override
     public boolean canEnchant(ItemStack stack)
     {
-        return stack.getItem() instanceof ToolItem;
+        return stack.getItem() instanceof DiggerItem;
     }
 
     @Override

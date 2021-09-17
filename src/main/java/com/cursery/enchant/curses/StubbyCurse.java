@@ -1,12 +1,12 @@
 package com.cursery.enchant.curses;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  * Chance for bows to only fire short arrows
@@ -19,9 +19,9 @@ public class StubbyCurse extends Enchantment
     private final       String NAME_ID = "curse_stubby";
     public final static int    CHANCE  = 4;
 
-    public StubbyCurse(final Rarity rarity, final EquipmentSlotType[] slotTypes)
+    public StubbyCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
-        super(rarity, EnchantmentType.WEAPON, slotTypes);
+        super(rarity, EnchantmentCategory.WEAPON, slotTypes);
         setRegistryName(NAME_ID);
     }
 

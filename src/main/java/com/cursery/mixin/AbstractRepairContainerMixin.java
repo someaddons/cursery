@@ -2,12 +2,12 @@ package com.cursery.mixin;
 
 import com.cursery.enchant.CurseEnchantmentHelper;
 import com.cursery.enchant.PlayerVisualHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.AbstractRepairContainer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ItemCombinerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,22 +15,22 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(AbstractRepairContainer.class)
+@Mixin(ItemCombinerMenu.class)
 public class AbstractRepairContainerMixin
 {
     @Shadow
     @Final
-    public IInventory inputSlots;
-    AbstractRepairContainer self = (AbstractRepairContainer) (Object) this;
+    public Container inputSlots;
+    ItemCombinerMenu self = (ItemCombinerMenu) (Object) this;
 
-    @Inject(method = "quickMoveStack", at = @At(value = "INVOKE", target = "net/minecraft/inventory/container/Slot.hasItem ()Z", shift = At.Shift.AFTER)
+    @Inject(method = "quickMoveStack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/Slot;hasItem()Z", shift = At.Shift.AFTER)
       , allow = 1)
-    public void test(final PlayerEntity player, final int slotNum, final CallbackInfoReturnable<ItemStack> cir)
+    public void test(final Player player, final int slotNum, final CallbackInfoReturnable<ItemStack> cir)
     {
         if (player != null && !player.level.isClientSide() && slotNum == 2)
         {
             ItemStack result = self.slots.get(slotNum).getItem();
-            ItemStack input = self.inputSlots.getItem(0);
+            ItemStack input = inputSlots.getItem(0);
 
             if (CurseEnchantmentHelper.delayItem == result.getItem())
             {
@@ -39,8 +39,8 @@ public class AbstractRepairContainerMixin
                   EnchantmentHelper.getEnchantments(result)))
                 {
                     player.containerMenu.broadcastChanges();
-                    ((ServerPlayerEntity) player).refreshContainer(player.containerMenu);
-                    PlayerVisualHelper.randomNotificationOnCurseApply((ServerPlayerEntity) player, result);
+                    //((ServerPlayer) player).refreshContainer(player.containerMenu);
+                    PlayerVisualHelper.randomNotificationOnCurseApply((ServerPlayer) player, result);
                 }
             }
         }

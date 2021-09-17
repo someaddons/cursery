@@ -1,16 +1,16 @@
 package com.cursery.enchant.curses;
 
 import com.cursery.Cursery;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class HungryCurse extends Enchantment
 {
@@ -20,9 +20,9 @@ public class HungryCurse extends Enchantment
     private final        String NAME_ID = "curse_hungry";
     private final static int    CHANCE  = 15;
 
-    public HungryCurse(final Rarity rarity, final EquipmentSlotType[] slotTypes)
+    public HungryCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
-        super(rarity, EnchantmentType.ARMOR, slotTypes);
+        super(rarity, EnchantmentCategory.ARMOR, slotTypes);
         setRegistryName(NAME_ID);
     }
 
@@ -37,7 +37,7 @@ public class HungryCurse extends Enchantment
     {
         if (Cursery.rand.nextInt(CHANCE) == 0)
         {
-            user.addEffect(new EffectInstance(Effects.HUNGER, 6 * 20 * enchantLevel));
+            user.addEffect(new MobEffectInstance(MobEffects.HUNGER, 6 * 20 * enchantLevel));
         }
     }
 
@@ -46,7 +46,7 @@ public class HungryCurse extends Enchantment
     {
         if (Cursery.rand.nextInt(CHANCE) == 0)
         {
-            user.addEffect(new EffectInstance(Effects.HUNGER, 6 * 20 * enchantLevel));
+            user.addEffect(new MobEffectInstance(MobEffects.HUNGER, 6 * 20 * enchantLevel));
         }
     }
 

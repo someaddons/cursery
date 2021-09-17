@@ -1,14 +1,14 @@
 package com.cursery.enchant;
 
 import com.cursery.Cursery;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.*;
 
@@ -26,8 +26,8 @@ public class CurseEnchantmentHelper
     public static Map<Enchantment, Integer> curseWeightMap   = new HashMap<>();
     public static int                       totalCurseWeight = 0;
 
-    public static ItemStack          notifyStack;
-    public static ServerPlayerEntity notifyPlayer;
+    public static ItemStack    notifyStack;
+    public static ServerPlayer notifyPlayer;
 
     /**
      * Checks the stack for applying a random curse
@@ -241,11 +241,11 @@ public class CurseEnchantmentHelper
         stack.getOrCreateTag();
         if (!stack.getTag().contains("Enchantments", 9))
         {
-            stack.getTag().put("Enchantments", new ListNBT());
+            stack.getTag().put("Enchantments", new ListTag());
         }
 
-        ListNBT listnbt = stack.getTag().getList("Enchantments", 10);
-        CompoundNBT compoundnbt = new CompoundNBT();
+        ListTag listnbt = stack.getTag().getList("Enchantments", 10);
+        CompoundTag compoundnbt = new CompoundTag();
         compoundnbt.putString("id", String.valueOf((Object) Registry.ENCHANTMENT.getKey(enchantment)));
         compoundnbt.putShort("lvl", (short) ((byte) level));
         listnbt.add(compoundnbt);

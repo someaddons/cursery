@@ -1,15 +1,15 @@
 package com.cursery.enchant.curses;
 
 import com.cursery.Cursery;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class SwitchyWeaponCurse extends Enchantment
 {
@@ -19,9 +19,9 @@ public class SwitchyWeaponCurse extends Enchantment
     private final       String NAME_ID = "curse_switchy";
     public final static int    CHANCE  = 20;
 
-    public SwitchyWeaponCurse(final Rarity rarity, final EquipmentSlotType[] slotTypes)
+    public SwitchyWeaponCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
-        super(rarity, EnchantmentType.WEAPON, slotTypes);
+        super(rarity, EnchantmentCategory.WEAPON, slotTypes);
         setRegistryName(NAME_ID);
     }
 
@@ -34,12 +34,12 @@ public class SwitchyWeaponCurse extends Enchantment
     @Override
     public void doPostAttack(LivingEntity user, Entity attacker, int enchantLevel)
     {
-        if (Cursery.rand.nextInt(CHANCE) == 0 && attacker != null && enchantLevel > 0 && user instanceof PlayerEntity)
+        if (Cursery.rand.nextInt(CHANCE) == 0 && attacker != null && enchantLevel > 0 && user instanceof Player)
         {
-            final PlayerEntity playerEntity = ((PlayerEntity) user);
+            final Player playerEntity = ((Player) user);
             final ItemStack mainHand = playerEntity.getMainHandItem();
-            playerEntity.setItemInHand(Hand.MAIN_HAND, playerEntity.getOffhandItem());
-            playerEntity.setItemInHand(Hand.OFF_HAND, mainHand);
+            playerEntity.setItemInHand(InteractionHand.MAIN_HAND, playerEntity.getOffhandItem());
+            playerEntity.setItemInHand(InteractionHand.OFF_HAND, mainHand);
         }
     }
 

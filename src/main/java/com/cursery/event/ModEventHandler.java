@@ -1,18 +1,18 @@
 package com.cursery.event;
 
 import com.cursery.Cursery;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.AirItem;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.AirItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 public class ModEventHandler
 {
     @SubscribeEvent
-    public static void onConfigChanged(ModConfig.ModConfigEvent event)
+    public static void onConfigChanged(ModConfigEvent event)
     {
         Cursery.config.parseConfig();
     }

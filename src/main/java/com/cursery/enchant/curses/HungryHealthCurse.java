@@ -1,14 +1,14 @@
 package com.cursery.enchant.curses;
 
 import com.cursery.Cursery;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  * Upon getting hit consume saturation to restore a little health
@@ -21,9 +21,9 @@ public class HungryHealthCurse extends Enchantment
     private final       String NAME_ID = "curse_hungryhealth";
     public final static int    CHANCE  = 5;
 
-    public HungryHealthCurse(final Rarity rarity, final EquipmentSlotType[] slotTypes)
+    public HungryHealthCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
-        super(rarity, EnchantmentType.WEAPON, slotTypes);
+        super(rarity, EnchantmentCategory.WEAPON, slotTypes);
         setRegistryName(NAME_ID);
     }
 
@@ -36,9 +36,9 @@ public class HungryHealthCurse extends Enchantment
     @Override
     public void doPostHurt(LivingEntity user, Entity attacker, int enchantLevel)
     {
-        if (attacker != null && Cursery.rand.nextInt(CHANCE) == 0 && enchantLevel > 0 && user instanceof PlayerEntity && user.getMaxHealth() - user.getHealth() > 4)
+        if (attacker != null && Cursery.rand.nextInt(CHANCE) == 0 && enchantLevel > 0 && user instanceof Player && user.getMaxHealth() - user.getHealth() > 4)
         {
-            final PlayerEntity player = (PlayerEntity) user;
+            final Player player = (Player) user;
             if (player.getFoodData().getFoodLevel() > 1)
             {
                 final int consume = Math.min(player.getFoodData().getFoodLevel() - 1, 2);
@@ -51,7 +51,7 @@ public class HungryHealthCurse extends Enchantment
     @Override
     public boolean canEnchant(ItemStack stack)
     {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlotType.CHEST;
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.CHEST;
     }
 
     @Override

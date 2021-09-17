@@ -2,8 +2,8 @@ package com.cursery.enchant;
 
 import com.cursery.Cursery;
 import com.cursery.enchant.curses.*;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -11,9 +11,9 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Cursery.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Enchants
 {
-    private static final EquipmentSlotType[] ARMOR_SLOTS   =
-      new EquipmentSlotType[] {EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET};
-    private static final EquipmentSlotType[] TOOLS_WEAPONS = new EquipmentSlotType[] {EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND};
+    private static final EquipmentSlot[] ARMOR_SLOTS   =
+      new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+    private static final EquipmentSlot[] TOOLS_WEAPONS = new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND};
 
     public static BlindCurse           blindEnchant;
     public static HeavyCurse           heavyCurse;

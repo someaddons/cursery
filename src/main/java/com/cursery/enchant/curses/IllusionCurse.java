@@ -1,15 +1,15 @@
 package com.cursery.enchant.curses;
 
 import com.cursery.Cursery;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +24,9 @@ public class IllusionCurse extends Enchantment
 
     private static final List<SoundEvent> events = new ArrayList<>();
 
-    public IllusionCurse(final Rarity rarity, final EquipmentSlotType[] slotTypes)
+    public IllusionCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
-        super(rarity, EnchantmentType.ARMOR, slotTypes);
+        super(rarity, EnchantmentCategory.ARMOR, slotTypes);
         setRegistryName(NAME_ID);
 
         events.add(SoundEvents.TNT_PRIMED);
@@ -64,7 +64,7 @@ public class IllusionCurse extends Enchantment
     @Override
     public boolean canEnchant(ItemStack stack)
     {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlotType.HEAD;
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.HEAD;
     }
 
     @Override

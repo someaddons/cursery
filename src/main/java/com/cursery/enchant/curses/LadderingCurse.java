@@ -1,12 +1,12 @@
 package com.cursery.enchant.curses;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class LadderingCurse extends Enchantment
 {
@@ -17,9 +17,9 @@ public class LadderingCurse extends Enchantment
      */
     private final String NAME_ID = "curse_laddering";
 
-    public LadderingCurse(final Rarity rarity, final EquipmentSlotType[] slotTypes)
+    public LadderingCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
-        super(rarity, EnchantmentType.ARMOR, slotTypes);
+        super(rarity, EnchantmentCategory.ARMOR, slotTypes);
         setRegistryName(NAME_ID);
     }
 
@@ -37,7 +37,7 @@ public class LadderingCurse extends Enchantment
     @Override
     public boolean canEnchant(ItemStack stack)
     {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlotType.FEET;
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.FEET;
     }
 
     @Override

@@ -4,9 +4,9 @@ import com.cursery.Cursery;
 import com.cursery.enchant.CurseEnchantmentHelper;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -84,7 +84,7 @@ public class Configuration
         }
 
         // Parse registry entries
-        for (final Map.Entry<RegistryKey<Enchantment>, Enchantment> enchantmentEntry : ForgeRegistries.ENCHANTMENTS.getEntries())
+        for (final Map.Entry<ResourceKey<Enchantment>, Enchantment> enchantmentEntry : ForgeRegistries.ENCHANTMENTS.getEntries())
         {
             if (enchantmentEntry.getValue().isCurse())
             {
