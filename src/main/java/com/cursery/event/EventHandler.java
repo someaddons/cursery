@@ -75,6 +75,10 @@ public class EventHandler
                     PlayerVisualHelper.randomNotificationOnCurseApply((ServerPlayer) event.getPlayer(), event.getItemResult());
                 }
             }
+            else
+            {
+                PlayerVisualHelper.enchantSuccess((ServerPlayer) event.getPlayer(), event.getItemResult());
+            }
         }
     }
 
@@ -273,7 +277,7 @@ public class EventHandler
     @SubscribeEvent
     public static void on(PlayerEvent.BreakSpeed event)
     {
-        if (event.getEntity() == null || event.getEntity().level.isClientSide)
+        if (event.getEntity() == null)
         {
             return;
         }

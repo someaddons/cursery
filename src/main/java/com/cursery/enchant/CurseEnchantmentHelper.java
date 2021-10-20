@@ -21,8 +21,6 @@ public class CurseEnchantmentHelper
     public static  Item    delayItem;
     private static Random  rand      = new Random();
 
-    public static ItemStack lastCursedItem = null;
-
     public static Map<Enchantment, Integer> curseWeightMap   = new HashMap<>();
     public static int                       totalCurseWeight = 0;
 
@@ -60,8 +58,6 @@ public class CurseEnchantmentHelper
         {
             return false;
         }
-
-        lastCursedItem = null;
 
         int levelSum = 0;
         // Sum all levels
@@ -108,13 +104,18 @@ public class CurseEnchantmentHelper
         // Remember it to allow notifying players, particles purple color and a text: The wheel of fortune turns. Ein hauch von schicksal. The dark etc
         if (appliedCurse)
         {
-            lastCursedItem = stack;
-
-            if (lastCursedItem == notifyStack && notifyPlayer != null)
+            if (stack == notifyStack && notifyPlayer != null)
             {
                 PlayerVisualHelper.randomNotificationOnCurseApply(notifyPlayer, notifyStack);
                 notifyPlayer = null;
                 notifyStack = null;
+            }
+        }
+        else
+        {
+            if (stack == notifyStack && notifyPlayer != null)
+            {
+                PlayerVisualHelper.enchantSuccess(notifyPlayer, notifyStack);
             }
         }
 

@@ -42,6 +42,10 @@ public class AbstractRepairContainerMixin
                     //((ServerPlayer) player).refreshContainer(player.containerMenu);
                     PlayerVisualHelper.randomNotificationOnCurseApply((ServerPlayer) player, result);
                 }
+                else
+                {
+                    PlayerVisualHelper.enchantSuccess((ServerPlayer) player, result);
+                }
             }
         }
     }

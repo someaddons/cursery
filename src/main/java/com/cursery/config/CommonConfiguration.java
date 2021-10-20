@@ -11,6 +11,8 @@ public class CommonConfiguration
     public final ForgeConfigSpec.ConfigValue<List<? extends String>> disabledItems;
     public final ForgeConfigSpec.ConfigValue<Boolean>                excludeTreasure;
     public final ForgeConfigSpec.ConfigValue<Boolean>                debugTries;
+    public final ForgeConfigSpec.ConfigValue<Boolean>                showDesc;
+    public final ForgeConfigSpec.ConfigValue<Boolean>                visualSuccess;
     public final ForgeConfigSpec.ConfigValue<Integer>                basecursechance;
     public final ForgeConfigSpec                                     ForgeConfigSpecBuilder;
 
@@ -18,6 +20,8 @@ public class CommonConfiguration
     {
         builder.push("Cursery settings");
         //COnfig: affect players or all entities
+        builder.comment("Should enchanted books show a hint for curse magic, default:true");
+        showDesc = builder.define("showDesc", true);
 
         builder.comment(
           "Add a curse id here to exclude it from beeing applied. "
@@ -39,6 +43,9 @@ public class CommonConfiguration
         disabledItems = builder.defineList("disabledItems",
           Collections.EMPTY_LIST
           , e -> e instanceof String && ((String) e).contains(":"));
+
+        builder.comment("Should enchanting success play a sound and show particles, default:true");
+        visualSuccess = builder.define("visualSuccess", true);
 
         // Escapes the current category level
         builder.pop();

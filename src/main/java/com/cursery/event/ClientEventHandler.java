@@ -19,6 +19,11 @@ public class ClientEventHandler
     @SubscribeEvent
     public static void on(ItemTooltipEvent event)
     {
+        if (!Cursery.config.getCommonConfig().showDesc.get())
+        {
+            return;
+        }
+
         if (event.getItemStack().getItem() instanceof EnchantedBookItem)
         {
             for (final Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.getEnchantments(event.getItemStack()).entrySet())
