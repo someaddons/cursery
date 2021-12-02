@@ -23,8 +23,7 @@ public class AbstractRepairContainerMixin
     public Container inputSlots;
     ItemCombinerMenu self = (ItemCombinerMenu) (Object) this;
 
-    @Inject(method = "quickMoveStack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/Slot;hasItem()Z", shift = At.Shift.AFTER)
-      , allow = 1)
+    @Inject(method = "quickMoveStack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/Slot;hasItem()Z", shift = At.Shift.AFTER), allow = 1)
     public void test(final Player player, final int slotNum, final CallbackInfoReturnable<ItemStack> cir)
     {
         if (player != null && !player.level.isClientSide() && slotNum == 2)
