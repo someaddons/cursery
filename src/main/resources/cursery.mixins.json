@@ -1,0 +1,24 @@
+{
+  "required": false,
+  "package": "com.cursery.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "cursery.refmap.json",
+  "mixins": [
+    "AbstractRepairContainerMixin",
+    "AnvilMenuMixin",
+    "AttributeModifierManagerMixin",
+    "BowItemMixin",
+    "EnchantmentHelperMixin",
+    "EnchantmentMenuMixin",
+    "ItemStackMixin",
+    "LivingFallMixin",
+    "PlayerTickMixin",
+    "ServerPlayerGameModeMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}
