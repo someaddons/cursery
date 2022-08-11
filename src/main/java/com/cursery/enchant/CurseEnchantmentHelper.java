@@ -25,8 +25,9 @@ public class CurseEnchantmentHelper
     public static Map<Enchantment, Integer> curseWeightMap   = new HashMap<>();
     public static int                       totalCurseWeight = 0;
 
-    public static ItemStack    notifyStack;
-    public static ServerPlayer notifyPlayer;
+    public static ItemStack                 notifyStack;
+    public static ServerPlayer              notifyPlayer;
+    public static Map<Enchantment, Integer> prevEnchants;
 
     /**
      * Checks the stack for applying a random curse

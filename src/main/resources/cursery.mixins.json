@@ -7,7 +7,9 @@
     "AbstractRepairContainerMixin",
     "AttributeModifierManagerMixin",
     "EnchantmentHelperMixin",
-    "ItemStackMixin"
+    "ItemStackMixin",
+    "QuarkEnchanterCompat",
+    "QuarkEnchanterTECompat"
   ],
   "client": [
   ],
