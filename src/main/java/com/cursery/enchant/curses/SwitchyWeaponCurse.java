@@ -16,13 +16,12 @@ public class SwitchyWeaponCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final       String NAME_ID = "curse_switchy";
+    public static final String NAME_ID = "curse_switchy";
     public final static int    CHANCE  = 20;
 
     public SwitchyWeaponCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.WEAPON, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

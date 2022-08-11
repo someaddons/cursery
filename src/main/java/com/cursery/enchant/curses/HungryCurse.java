@@ -17,13 +17,12 @@ public class HungryCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final        String NAME_ID = "curse_hungry";
+    public static final  String NAME_ID = "curse_hungry";
     private final static int    CHANCE  = 15;
 
     public HungryCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.ARMOR, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

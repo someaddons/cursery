@@ -16,13 +16,12 @@ public class ElectrifiedToolCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final       String NAME_ID = "curse_electrified";
+    public static final String NAME_ID = "curse_electrified";
     public final static int    CHANCE  = 1;
 
     public ElectrifiedToolCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.WEAPON, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

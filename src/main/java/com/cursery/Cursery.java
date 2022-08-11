@@ -1,6 +1,7 @@
 package com.cursery;
 
 import com.cursery.config.Configuration;
+import com.cursery.enchant.Enchants;
 import com.cursery.event.ClientEventHandler;
 import com.cursery.event.EventHandler;
 import com.cursery.event.ModEventHandler;
@@ -47,6 +48,7 @@ public class Cursery
 
     private void setup(final FMLCommonSetupEvent event)
     {
+        Enchants.init();
         config.parseConfig();
         LOGGER.info("Cursery initialized");
     }

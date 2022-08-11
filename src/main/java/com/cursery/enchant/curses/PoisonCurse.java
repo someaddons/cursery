@@ -16,13 +16,12 @@ public class PoisonCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final        String NAME_ID = "curse_poison";
+    public static final  String NAME_ID = "curse_poison";
     private final static int    CHANCE  = 7;
 
     public PoisonCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.ARMOR, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 
@@ -144,10 +145,10 @@ public class CurseEnchantmentHelper
             if (Cursery.config.getCommonConfig().debugTries.get())
             {
                 Cursery.LOGGER.info("Rolling new curse for " + stack + " addedEnchLevels: " + newLevel + " totalEnchantLevels: " + levelSum + " chance:" + Math.min(75,
-                  Cursery.config.getCommonConfig().basecursechance.get() + levelSum - (stack.getItemEnchantability() >> 1)));
+                  Cursery.config.getCommonConfig().basecursechance.get() + levelSum - (stack.getEnchantmentValue() >> 1)));
             }
 
-            if (rand.nextInt(100) < Math.min(75, Cursery.config.getCommonConfig().basecursechance.get() + levelSum - (stack.getItemEnchantability() >> 1)))
+            if (rand.nextInt(100) < Math.min(75, Cursery.config.getCommonConfig().basecursechance.get() + levelSum - (stack.getEnchantmentValue() >> 1)))
             {
                 if (Cursery.config.getCommonConfig().debugTries.get())
                 {
@@ -167,7 +168,7 @@ public class CurseEnchantmentHelper
                     {
                         if (Cursery.config.getCommonConfig().debugTries.get())
                         {
-                            Cursery.LOGGER.info("Applying curse " + curse.getRegistryName() + " to: " + stack);
+                            Cursery.LOGGER.info("Applying curse " + ForgeRegistries.ENCHANTMENTS.getKey(curse) + " to: " + stack);
                         }
 
                         enchantManually(stack, curse, currentLevel + 1);
@@ -197,7 +198,8 @@ public class CurseEnchantmentHelper
             {
                 if (Cursery.config.getCommonConfig().debugTries.get())
                 {
-                    Cursery.LOGGER.info("Curse " + enchantment.getRegistryName() + " is not compatible with " + entry.getKey().getRegistryName());
+                    Cursery.LOGGER.info(
+                      "Curse " + ForgeRegistries.ENCHANTMENTS.getKey(enchantment) + " is not compatible with " + ForgeRegistries.ENCHANTMENTS.getKey(entry.getKey()));
                 }
 
                 return false;

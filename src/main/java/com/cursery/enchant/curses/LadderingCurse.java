@@ -15,12 +15,11 @@ public class LadderingCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final String NAME_ID = "curse_laddering";
+    public static final String NAME_ID = "curse_laddering";
 
     public LadderingCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.ARMOR, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

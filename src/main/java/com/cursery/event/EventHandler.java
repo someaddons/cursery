@@ -31,7 +31,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -57,27 +57,27 @@ public class EventHandler
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onAnvilOutput(final AnvilRepairEvent event)
     {
-        if (event.getPlayer() != null && event.getPlayer().level.isClientSide() || event.getPlayer() == null && EffectiveSide.get() == LogicalSide.CLIENT)
+        if (event.getEntity() != null && event.getEntity().level.isClientSide() || event.getEntity() == null && EffectiveSide.get() == LogicalSide.CLIENT)
         {
             return;
         }
 
-        if (CurseEnchantmentHelper.delayItem == event.getItemResult().getItem())
+        if (CurseEnchantmentHelper.delayItem == event.getOutput().getItem())
         {
-            if (CurseEnchantmentHelper.checkForRandomCurse(event.getItemResult(),
-              EnchantmentHelper.getEnchantments(event.getItemInput()),
-              EnchantmentHelper.getEnchantments(event.getItemResult())))
+            if (CurseEnchantmentHelper.checkForRandomCurse(event.getOutput(),
+              EnchantmentHelper.getEnchantments(event.getLeft()),
+              EnchantmentHelper.getEnchantments(event.getOutput())))
             {
-                if (event.getPlayer() != null && !event.getPlayer().level.isClientSide())
+                if (event.getEntity() != null && !event.getEntity().level.isClientSide())
                 {
-                    event.getPlayer().containerMenu.broadcastChanges();
+                    event.getEntity().containerMenu.broadcastChanges();
                     //((ServerPlayer) event.getPlayer()).refreshContainer(event.getPlayer().containerMenu);
-                    PlayerVisualHelper.randomNotificationOnCurseApply((ServerPlayer) event.getPlayer(), event.getItemResult());
+                    PlayerVisualHelper.randomNotificationOnCurseApply((ServerPlayer) event.getEntity(), event.getOutput());
                 }
             }
             else
             {
-                PlayerVisualHelper.enchantSuccess((ServerPlayer) event.getPlayer(), event.getItemResult());
+                PlayerVisualHelper.enchantSuccess((ServerPlayer) event.getEntity(), event.getOutput());
             }
         }
     }
@@ -85,12 +85,12 @@ public class EventHandler
     @SubscribeEvent
     public static void on(EnchantmentLevelSetEvent event)
     {
-        if (event.getWorld().isClientSide)
+        if (event.getLevel().isClientSide)
         {
             return;
         }
 
-        final Player player = event.getWorld().getNearestPlayer(
+        final Player player = event.getLevel().getNearestPlayer(
           TargetingConditions.forNonCombat().selector(entity -> entity instanceof ServerPlayer && ((ServerPlayer) entity).containerMenu != null),
           event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
 
@@ -157,7 +157,7 @@ public class EventHandler
                 final int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.undeadCurse, armor);
                 if (level > 0)
                 {
-                    if (event.player.level.isDay() && event.player.getBrightness() > 0.5f && event.player.level.canSeeSky(event.player.blockPosition()))
+                    if (event.player.level.isDay() && event.player.getLightLevelDependentMagicValue() > 9 && event.player.level.canSeeSky(event.player.blockPosition()))
                     {
                         event.player.setSecondsOnFire(10 * level);
                     }
@@ -232,29 +232,29 @@ public class EventHandler
     @SubscribeEvent
     public static void on(ArrowLooseEvent event)
     {
-        if (event.getPlayer() == null || event.getPlayer().level.isClientSide)
+        if (event.getEntity() == null || event.getEntity().level.isClientSide)
         {
             return;
         }
 
-        if (Cursery.rand.nextInt(StubbyCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.stubbyCurse, event.getPlayer().getMainHandItem()) > 0)
+        if (Cursery.rand.nextInt(StubbyCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.stubbyCurse, event.getBow()) > 0)
         {
             event.setCharge(5);
         }
 
-        if (Cursery.rand.nextInt(RecoilCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.recoilCurse, event.getPlayer().getMainHandItem()) > 0)
+        if (Cursery.rand.nextInt(RecoilCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.recoilCurse, event.getBow()) > 0)
         {
-            event.getPlayer().hurtMarked = true;
-            event.getPlayer()
+            event.getEntity().hurtMarked = true;
+            event.getEntity()
               .knockback(1.0F,
-                event.getPlayer().getLookAngle().x,
-                event.getPlayer().getLookAngle().z);
+                event.getEntity().getLookAngle().x,
+                event.getEntity().getLookAngle().z);
         }
 
-        if (Cursery.rand.nextInt(LooseCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.looseCurse, event.getPlayer().getMainHandItem()) > 0)
+        if (Cursery.rand.nextInt(LooseCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.looseCurse, event.getBow()) > 0)
         {
-            ((Player) event.getPlayer()).drop(event.getPlayer().getMainHandItem(), true);
-            event.getPlayer().setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+            ((Player) event.getEntity()).drop(event.getBow(), true);
+            event.getEntity().setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         }
     }
 
@@ -266,7 +266,7 @@ public class EventHandler
             return;
         }
 
-        final int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.steelFeet, event.getEntityLiving().getItemBySlot(EquipmentSlot.FEET));
+        final int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.steelFeet, event.getEntity().getItemBySlot(EquipmentSlot.FEET));
         if (level > 0)
         {
             event.setDistance(event.getDistance() + 1.7f);
@@ -282,7 +282,7 @@ public class EventHandler
             return;
         }
 
-        int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.slownessCurse, event.getEntityLiving().getMainHandItem());
+        int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.slownessCurse, event.getEntity().getMainHandItem());
         if (level > 0)
         {
             event.setNewSpeed(event.getOriginalSpeed() * (1f - (level * 0.20f)));

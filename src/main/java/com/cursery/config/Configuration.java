@@ -96,7 +96,7 @@ public class Configuration
                 }
                 else
                 {
-                    Cursery.LOGGER.info("Excluding curse: " + enchantmentEntry.getValue().getRegistryName() + " as config disables it");
+                    Cursery.LOGGER.info("Excluding curse: " + ForgeRegistries.ENCHANTMENTS.getKey(enchantmentEntry.getValue()) + " as config disables it");
                 }
             }
         }

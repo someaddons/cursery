@@ -16,13 +16,12 @@ public class RecoilCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final       String NAME_ID = "curse_recoil";
+    public static final String NAME_ID = "curse_recoil";
     public final static int    CHANCE  = 6;
 
     public RecoilCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.WEAPON, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

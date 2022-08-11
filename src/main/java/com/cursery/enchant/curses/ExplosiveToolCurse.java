@@ -16,13 +16,12 @@ public class ExplosiveToolCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final       String NAME_ID = "curse_explosive";
+    public static final String NAME_ID = "curse_explosive";
     public final static int    CHANCE  = 7;
 
     public ExplosiveToolCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.WEAPON, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

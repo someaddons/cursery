@@ -4,8 +4,8 @@ import com.cursery.Cursery;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -19,8 +19,8 @@ public class PlayerVisualHelper
 {
     public static void randomNotificationOnCurseApply(final ServerPlayer playerEntity, final ItemStack cursed)
     {
-        playerEntity.sendMessage(new TranslatableComponent(
-          "enchant_curse_applied_" + (Cursery.rand.nextInt(4) + 1) + ".desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)), playerEntity.getUUID());
+        playerEntity.sendSystemMessage(Component.translatable(
+          "enchant_curse_applied_" + (Cursery.rand.nextInt(4) + 1) + ".desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
         playerEntity.playNotifySound(SoundEvents.ENDER_DRAGON_GROWL, SoundSource.MASTER, 0.2f, 1.0f);
     }
 

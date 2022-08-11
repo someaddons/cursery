@@ -16,13 +16,12 @@ public class BlindCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final        String NAME_ID = "curse_blindness";
+    public static final  String NAME_ID = "curse_blindness";
     private final static int    CHANCE  = 7;
 
     public BlindCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.ARMOR, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

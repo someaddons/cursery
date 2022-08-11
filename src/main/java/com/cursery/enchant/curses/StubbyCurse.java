@@ -16,13 +16,12 @@ public class StubbyCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final       String NAME_ID = "curse_stubby";
+    public static final String NAME_ID = "curse_stubby";
     public final static int    CHANCE  = 4;
 
     public StubbyCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.WEAPON, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class IllusionCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final       String NAME_ID = "curse_illusion";
+    public static final String NAME_ID = "curse_illusion";
     public final static int    CHANCE  = 10000;
 
     private static final List<SoundEvent> events = new ArrayList<>();
@@ -27,7 +27,6 @@ public class IllusionCurse extends Enchantment
     public IllusionCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.ARMOR, slotTypes);
-        setRegistryName(NAME_ID);
 
         events.add(SoundEvents.TNT_PRIMED);
         events.add(SoundEvents.CREEPER_PRIMED);

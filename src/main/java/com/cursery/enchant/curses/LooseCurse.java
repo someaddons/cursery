@@ -21,13 +21,12 @@ public class LooseCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final       String NAME_ID = "curse_loose";
+    public static final String NAME_ID = "curse_loose";
     public final static int    CHANCE  = 30;
 
     public LooseCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.WEAPON, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

@@ -13,13 +13,12 @@ public class UndeadCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final       String NAME_ID = "curse_undead";
+    public static final String NAME_ID = "curse_undead";
     public final static int    CHANCE  = 500;
 
     public UndeadCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.ARMOR, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

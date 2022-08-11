@@ -18,13 +18,12 @@ public class HungryHealthCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final       String NAME_ID = "curse_hungryhealth";
+    public static final String NAME_ID = "curse_hungryhealth";
     public final static int    CHANCE  = 5;
 
     public HungryHealthCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.WEAPON, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

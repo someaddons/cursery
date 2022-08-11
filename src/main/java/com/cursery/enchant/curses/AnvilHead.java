@@ -16,13 +16,12 @@ public class AnvilHead extends Enchantment
     /**
      * Enchant id
      */
-    private final        String NAME_ID = "curse_anvil";
+    public static final  String NAME_ID = "curse_anvil";
     private final static int    CHANCE  = 30;
 
     public AnvilHead(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.ARMOR, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

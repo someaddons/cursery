@@ -15,13 +15,12 @@ public class HurtfulCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final       String NAME_ID = "curse_hurtful";
+    public static final String NAME_ID = "curse_hurtful";
     public final static int    CHANCE  = 3;
 
     public HurtfulCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.WEAPON, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

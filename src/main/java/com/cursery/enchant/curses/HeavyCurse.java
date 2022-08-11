@@ -14,13 +14,12 @@ public class HeavyCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final       String NAME_ID = "curse_heavy_enchant";
+    public static final String NAME_ID = "curse_heavy_enchant";
     public static final int    CHANCE  = 1000;
 
     public HeavyCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.ARMOR_CHEST, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

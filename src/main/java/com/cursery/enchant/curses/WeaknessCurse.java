@@ -16,13 +16,12 @@ public class WeaknessCurse extends Enchantment
     /**
      * Enchant id
      */
-    private final        String NAME_ID = "curse_weakness";
+    public static final  String NAME_ID = "curse_weakness";
     private final static int    CHANCE  = 7;
 
     public WeaknessCurse(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.ARMOR, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

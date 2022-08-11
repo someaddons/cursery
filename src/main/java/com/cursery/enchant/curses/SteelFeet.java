@@ -13,12 +13,11 @@ public class SteelFeet extends Enchantment
     /**
      * Enchant id
      */
-    private final String NAME_ID = "curse_steelfeet";
+    public static final String NAME_ID = "curse_steelfeet";
 
     public SteelFeet(final Rarity rarity, final EquipmentSlot[] slotTypes)
     {
         super(rarity, EnchantmentCategory.ARMOR, slotTypes);
-        setRegistryName(NAME_ID);
     }
 
     @Override

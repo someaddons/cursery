@@ -4,10 +4,11 @@ import com.cursery.Cursery;
 import net.minecraft.world.item.AirItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 
 public class ModEventHandler
 {
@@ -18,11 +19,14 @@ public class ModEventHandler
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void registerItems(RegistryEvent.Register<Item> event)
+    public static void registerItems(RegisterEvent event)
     {
-        for (final String name : Cursery.config.getCommonConfig().disabledItems.get())
+        if (event.getForgeRegistry() != null && event.getForgeRegistry().equals(ForgeRegistries.ITEMS))
         {
-            event.getRegistry().register(new AirItem(Blocks.AIR, new Item.Properties()).setRegistryName(name));
+            for (final String name : Cursery.config.getCommonConfig().disabledItems.get())
+            {
+                ForgeRegistries.ITEMS.register(name, new AirItem(Blocks.AIR, new Item.Properties()));
+            }
         }
     }
 }
