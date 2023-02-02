@@ -34,7 +34,10 @@ public class QuarkEnchanterCompat
             }
             else
             {
-                PlayerVisualHelper.enchantSuccess((ServerPlayer) player, stack);
+                if (player != null && !player.level.isClientSide())
+                {
+                    PlayerVisualHelper.enchantSuccess((ServerPlayer) player, stack);
+                }
             }
         }
     }

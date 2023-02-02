@@ -1,7 +1,6 @@
 package com.cursery.enchant;
 
 import com.cursery.Cursery;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -250,7 +249,7 @@ public class CurseEnchantmentHelper
 
         ListTag listnbt = stack.getTag().getList("Enchantments", 10);
         CompoundTag compoundnbt = new CompoundTag();
-        compoundnbt.putString("id", String.valueOf((Object) Registry.ENCHANTMENT.getKey(enchantment)));
+        compoundnbt.putString("id", String.valueOf((Object) ForgeRegistries.ENCHANTMENTS.getKey(enchantment)));
         compoundnbt.putShort("lvl", (short) ((byte) level));
         listnbt.add(compoundnbt);
     }

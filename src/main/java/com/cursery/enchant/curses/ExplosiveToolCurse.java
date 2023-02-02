@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 
 public class ExplosiveToolCurse extends Enchantment
 {
@@ -35,7 +35,7 @@ public class ExplosiveToolCurse extends Enchantment
     {
         if (Cursery.rand.nextInt(CHANCE) == 0 && attacker != null && enchantLevel > 0)
         {
-            user.level.explode(null, attacker.getX(), attacker.getY(), attacker.getZ(), 3, false, Explosion.BlockInteraction.DESTROY);
+            user.level.explode(null, attacker.getX(), attacker.getY(), attacker.getZ(), 3, false, Level.ExplosionInteraction.TNT);
         }
     }
 

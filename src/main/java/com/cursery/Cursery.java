@@ -38,6 +38,7 @@ public class Cursery
         Mod.EventBusSubscriber.Bus.FORGE.bus().get().register(EventHandler.class);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+        Enchants.init();
     }
 
     @SubscribeEvent
@@ -48,7 +49,6 @@ public class Cursery
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        Enchants.init();
         config.parseConfig();
         LOGGER.info("Cursery initialized");
     }

@@ -100,5 +100,10 @@ public class Configuration
                 }
             }
         }
+
+        if (totalCurseWeight == 0)
+        {
+            Cursery.LOGGER.error("Unable to retrieve curses from registry");
+        }
     }
 }
