@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -103,7 +103,7 @@ public class Configuration
                 continue;
             }
 
-            final Enchantment enchantment = Registry.ENCHANTMENT.get(id);
+            final Enchantment enchantment = BuiltInRegistries.ENCHANTMENT.get(id);
             if (enchantment == null)
             {
                 Cursery.LOGGER.error("Config entry could not be parsed, not a valid enchant" + entry);
@@ -114,7 +114,7 @@ public class Configuration
         }
 
         // Parse registry entries
-        for (final Map.Entry<ResourceKey<Enchantment>, Enchantment> enchantmentEntry : Registry.ENCHANTMENT.entrySet())
+        for (final Map.Entry<ResourceKey<Enchantment>, Enchantment> enchantmentEntry : BuiltInRegistries.ENCHANTMENT.entrySet())
         {
             if (enchantmentEntry.getValue().isCurse())
             {
@@ -126,7 +126,7 @@ public class Configuration
                 }
                 else
                 {
-                    Cursery.LOGGER.info("Excluding curse: " + Registry.ENCHANTMENT.getKey(enchantmentEntry.getValue()) + " as config disables it");
+                    Cursery.LOGGER.info("Excluding curse: " + BuiltInRegistries.ENCHANTMENT.getKey(enchantmentEntry.getValue()) + " as config disables it");
                 }
             }
         }

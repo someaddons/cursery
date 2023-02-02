@@ -1,7 +1,7 @@
 package com.cursery.enchant;
 
 import com.cursery.Cursery;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -167,7 +167,7 @@ public class CurseEnchantmentHelper
                     {
                         if (Cursery.config.getCommonConfig().debugTries)
                         {
-                            Cursery.LOGGER.info("Applying curse " + Registry.ENCHANTMENT.getKey(curse) + " to: " + stack);
+                            Cursery.LOGGER.info("Applying curse " + BuiltInRegistries.ENCHANTMENT.getKey(curse) + " to: " + stack);
                         }
 
                         enchantManually(stack, curse, currentLevel + 1);
@@ -197,7 +197,8 @@ public class CurseEnchantmentHelper
             {
                 if (Cursery.config.getCommonConfig().debugTries)
                 {
-                    Cursery.LOGGER.info("Curse " + Registry.ENCHANTMENT.getKey(enchantment) + " is not compatible with " + Registry.ENCHANTMENT.getKey(entry.getKey()));
+                    Cursery.LOGGER.info(
+                      "Curse " + BuiltInRegistries.ENCHANTMENT.getKey(enchantment) + " is not compatible with " + BuiltInRegistries.ENCHANTMENT.getKey(entry.getKey()));
                 }
 
                 return false;
@@ -247,7 +248,7 @@ public class CurseEnchantmentHelper
 
         ListTag listnbt = stack.getTag().getList("Enchantments", 10);
         CompoundTag compoundnbt = new CompoundTag();
-        compoundnbt.putString("id", String.valueOf((Object) Registry.ENCHANTMENT.getKey(enchantment)));
+        compoundnbt.putString("id", String.valueOf((Object) BuiltInRegistries.ENCHANTMENT.getKey(enchantment)));
         compoundnbt.putShort("lvl", (short) ((byte) level));
         listnbt.add(compoundnbt);
     }

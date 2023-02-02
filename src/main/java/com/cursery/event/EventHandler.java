@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -144,7 +144,7 @@ public class EventHandler
                 final int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.undeadCurse, armor);
                 if (level > 0)
                 {
-                    if (player.level.isDay() && player.getBrightness() > 0.5f && player.level.canSeeSky(player.blockPosition()))
+                    if (player.level.isDay() && player.getLightLevelDependentMagicValue() > 9 && player.level.canSeeSky(player.blockPosition()))
                     {
                         player.setSecondsOnFire(10 * level);
                     }
@@ -184,7 +184,7 @@ public class EventHandler
     {
         if (Cursery.rand.nextInt(ExplosiveToolCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.explosiveToolCurse, player.getMainHandItem()) > 0)
         {
-            player.level.explode(null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 3, false, Explosion.BlockInteraction.DESTROY);
+            player.level.explode(null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 3, false, Level.ExplosionInteraction.TNT);
         }
 
         if (Cursery.rand.nextInt(LooseCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.looseCurse, player.getMainHandItem()) > 0)

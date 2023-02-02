@@ -2,7 +2,6 @@
   "required": false,
   "package": "com.cursery.mixin",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "cursery.refmap.json",
   "mixins": [
     "AbstractRepairContainerMixin",
     "AnvilMenuMixin",

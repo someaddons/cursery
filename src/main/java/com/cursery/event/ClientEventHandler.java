@@ -4,7 +4,6 @@ import com.cursery.Cursery;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
@@ -30,20 +29,20 @@ public class ClientEventHandler
             {
                 if (entry.getKey().isCurse())
                 {
-                    tooltips.add(new TranslatableComponent("enchanted_book_cursed.desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
+                    tooltips.add(Component.translatable("enchanted_book_cursed.desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
                     return;
                 }
 
                 if (!(entry.getKey().isTreasureOnly() && Cursery.config.getCommonConfig().excludeTreasure))
                 {
-                    tooltips.add(new TranslatableComponent("enchanted_book.desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
+                    tooltips.add(Component.translatable("enchanted_book.desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
                     return;
                 }
             }
         }
         else if (stack.getItem() instanceof BlockItem && ((BlockItem) stack.getItem()).getBlock() instanceof EnchantmentTableBlock)
         {
-            tooltips.add(new TranslatableComponent("enchanted_table.desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
+            tooltips.add(Component.translatable("enchanted_table.desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
         }
     }
 }

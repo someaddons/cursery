@@ -2,6 +2,7 @@ package com.cursery.enchant;
 
 import com.cursery.enchant.curses.*;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -34,115 +35,115 @@ public class Enchants
     public static void registerEnchants()
     {
         blindEnchant = Registry.register(
-          Registry.ENCHANTMENT,
+          BuiltInRegistries.ENCHANTMENT,
           BlindCurse.NAME_ID,
           new BlindCurse(Enchantment.Rarity.COMMON, ARMOR_SLOTS));
 
         heavyCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             HeavyCurse.NAME_ID,
             new HeavyCurse(Enchantment.Rarity.UNCOMMON, ARMOR_SLOTS));
 
         explosiveToolCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             ExplosiveToolCurse.NAME_ID,
             new ExplosiveToolCurse(Enchantment.Rarity.RARE, TOOLS_WEAPONS));
 
         stubbyCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             StubbyCurse.NAME_ID,
             new StubbyCurse(Enchantment.Rarity.UNCOMMON, TOOLS_WEAPONS));
 
         recoilCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             RecoilCurse.NAME_ID,
             new RecoilCurse(Enchantment.Rarity.COMMON, TOOLS_WEAPONS));
 
         looseCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             LooseCurse.NAME_ID,
             new LooseCurse(Enchantment.Rarity.UNCOMMON, TOOLS_WEAPONS));
 
         hurtfulCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             HurtfulCurse.NAME_ID,
             new HurtfulCurse(Enchantment.Rarity.COMMON, ARMOR_SLOTS));
 
         weaknessCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             WeaknessCurse.NAME_ID,
             new WeaknessCurse(Enchantment.Rarity.COMMON, ARMOR_SLOTS));
 
         anvilHead =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             AnvilHead.NAME_ID,
             new AnvilHead(Enchantment.Rarity.VERY_RARE, ARMOR_SLOTS));
 
         hungryCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             HungryCurse.NAME_ID,
             new HungryCurse(Enchantment.Rarity.COMMON, ARMOR_SLOTS));
 
         undeadCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             UndeadCurse.NAME_ID,
             new UndeadCurse(Enchantment.Rarity.RARE, ARMOR_SLOTS));
 
         poisonCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             PoisonCurse.NAME_ID,
             new PoisonCurse(Enchantment.Rarity.COMMON, ARMOR_SLOTS));
 
         switchyWeaponCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             SwitchyWeaponCurse.NAME_ID,
             new SwitchyWeaponCurse(Enchantment.Rarity.RARE, TOOLS_WEAPONS));
 
         hungryHealthCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             HungryHealthCurse.NAME_ID,
             new HungryHealthCurse(Enchantment.Rarity.VERY_RARE, ARMOR_SLOTS));
 
         illusionCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             IllusionCurse.NAME_ID,
             new IllusionCurse(Enchantment.Rarity.RARE, ARMOR_SLOTS));
 
         steelFeet =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             SteelFeet.NAME_ID,
             new SteelFeet(Enchantment.Rarity.UNCOMMON, ARMOR_SLOTS));
 
         ladderingCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             LadderingCurse.NAME_ID,
             new LadderingCurse(Enchantment.Rarity.RARE, ARMOR_SLOTS));
 
         slownessCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             SlownessCurse.NAME_ID,
             new SlownessCurse(Enchantment.Rarity.COMMON, TOOLS_WEAPONS));
 
         electrifiedToolCurse =
           Registry.register(
-            Registry.ENCHANTMENT,
+            BuiltInRegistries.ENCHANTMENT,
             ElectrifiedToolCurse.NAME_ID,
             new ElectrifiedToolCurse(Enchantment.Rarity.UNCOMMON, TOOLS_WEAPONS));
     }
