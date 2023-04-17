@@ -27,14 +27,14 @@ public class CommonConfiguration
           "Add a curse id here to exclude it from beeing applied. "
             + "To put multiple values seperate them by commas like this:  [\"minecraft:curse\", \"mod:curse;\"] ");
         excludedCUrses = builder.defineList("excludedCUrses",
-          Collections.EMPTY_LIST
+          List.of("minecraft:vanishing_curse")
           , e -> e instanceof String && ((String) e).contains(":"));
 
         builder.comment("Should applying treasure enchants be excluded, default:false");
         excludeTreasure = builder.define("excludeTreasure", false);
 
-        builder.comment("Base curse application chance, scales up the more enchants the item has. Default:15 %");
-        basecursechance = builder.defineInRange("basecursechance", 15, 1, 100);
+        builder.comment("Base curse application chance, scales up the more enchants the item has. Default:5 %");
+        basecursechance = builder.defineInRange("basecursechance", 5, 1, 100);
 
         builder.comment("Whether to log debug messages about curse rng beeing rolled, default = false");
         debugTries = builder.define("debugTries", false);
