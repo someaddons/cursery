@@ -15,10 +15,11 @@ public class CommonConfiguration
     public boolean      debugTries      = false;
     public boolean      showDesc        = true;
     public boolean      visualSuccess   = true;
-    public int          basecursechance = 15;
+    public int          basecursechance = 5;
 
     protected CommonConfiguration()
     {
+        excludedCurses.add("minecraft:vanishing_curse");
     }
 
     public JsonObject serialize()
@@ -47,7 +48,7 @@ public class CommonConfiguration
         root.add("excludeTreasure", entry2);
 
         final JsonObject entry3 = new JsonObject();
-        entry3.addProperty("desc:", "Base curse application chance, scales up the more enchants the item has. Default:15 %");
+        entry3.addProperty("desc:", "Base curse application chance, scales up the more enchants the item has. Default:5 %");
         entry3.addProperty("basecursechance", basecursechance);
         root.add("basecursechance", entry3);
 
