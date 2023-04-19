@@ -50,7 +50,7 @@ public class HungryHealthCurse extends Enchantment
     @Override
     public boolean canEnchant(ItemStack stack)
     {
-        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getSlot() == EquipmentSlot.CHEST;
+        return stack.getItem() instanceof ArmorItem && ((ArmorItem) stack.getItem()).getType().getSlot() == EquipmentSlot.CHEST;
     }
 
     @Override
