@@ -3,6 +3,7 @@ package com.cursery.event;
 import com.cursery.Cursery;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -39,10 +40,27 @@ public class ClientEventHandler
                     return;
                 }
             }
+
+            return;
         }
         else if (stack.getItem() instanceof BlockItem && ((BlockItem) stack.getItem()).getBlock() instanceof EnchantmentTableBlock)
         {
             tooltips.add(Component.translatable("enchanted_table.desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
+        }
+
+        for (final Map.Entry<Enchantment, Integer> entry : EnchantmentHelper.getEnchantments(stack).entrySet())
+        {
+            if (entry.getKey().isCurse())
+            {
+                for (final Component component : tooltips)
+                {
+                    if (component instanceof MutableComponent && component.equals(entry.getKey().getFullname(entry.getValue())))
+                    {
+                        ((MutableComponent) component).setStyle(component.getStyle().withColor(ChatFormatting.DARK_PURPLE));
+                        break;
+                    }
+                }
+            }
         }
     }
 }
