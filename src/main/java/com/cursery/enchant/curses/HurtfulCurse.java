@@ -2,7 +2,6 @@ package com.cursery.enchant.curses;
 
 import com.cursery.Cursery;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,7 +34,7 @@ public class HurtfulCurse extends Enchantment
     {
         if (attacker != null && Cursery.rand.nextInt(CHANCE) == 0 && enchantLevel > 0)
         {
-            user.hurt(DamageSource.thorns(attacker), 2 * enchantLevel);
+            user.hurt(user.damageSources().thorns(attacker), 2 * enchantLevel);
         }
     }
 
