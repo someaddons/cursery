@@ -37,8 +37,16 @@ public class SwitchyWeaponCurse extends Enchantment
         {
             final Player playerEntity = ((Player) user);
             final ItemStack mainHand = playerEntity.getMainHandItem();
-            playerEntity.setItemInHand(InteractionHand.MAIN_HAND, playerEntity.getOffhandItem());
+            final ItemStack offHand = playerEntity.getOffhandItem();
+            playerEntity.setItemInHand(InteractionHand.MAIN_HAND, offHand);
             playerEntity.setItemInHand(InteractionHand.OFF_HAND, mainHand);
+
+            // Revert if something went wrong, probably some mods doing stupid
+            if (!playerEntity.getMainHandItem().equals(offHand) || !playerEntity.getOffhandItem().equals(mainHand))
+            {
+                playerEntity.setItemInHand(InteractionHand.MAIN_HAND, mainHand);
+                playerEntity.setItemInHand(InteractionHand.OFF_HAND, offHand);
+            }
         }
     }
 
