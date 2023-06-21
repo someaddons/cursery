@@ -9,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Material;
 
 public class AnvilHead extends Enchantment
 {
@@ -35,10 +34,10 @@ public class AnvilHead extends Enchantment
     {
         if (Cursery.rand.nextInt(CHANCE) == 0)
         {
-            if (user.level.getBlockState(user.blockPosition().above(2)).getMaterial() == Material.AIR
-                  && user.level.getBlockState(user.blockPosition().above(3)).getMaterial() == Material.AIR)
+            if (user.level().getBlockState(user.blockPosition().above(2)).isAir()
+                  && user.level().getBlockState(user.blockPosition().above(3)).isAir())
             {
-                user.level.setBlock(user.blockPosition().above(3), Blocks.DAMAGED_ANVIL.defaultBlockState(), 3);
+                user.level().setBlock(user.blockPosition().above(3), Blocks.DAMAGED_ANVIL.defaultBlockState(), 3);
             }
         }
     }

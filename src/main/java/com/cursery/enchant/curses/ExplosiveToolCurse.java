@@ -35,7 +35,7 @@ public class ExplosiveToolCurse extends Enchantment
     {
         if (Cursery.rand.nextInt(CHANCE) == 0 && attacker != null && enchantLevel > 0)
         {
-            user.level.explode(null, attacker.getX(), attacker.getY(), attacker.getZ(), 3, false, Level.ExplosionInteraction.TNT);
+            user.level().explode(null, attacker.getX(), attacker.getY(), attacker.getZ(), 3, false, Level.ExplosionInteraction.TNT);
         }
     }
 

@@ -45,7 +45,7 @@ public class EventHandler
     @SubscribeEvent
     public static void onAnvilInput(final AnvilUpdateEvent event)
     {
-        if (event.getPlayer() != null && event.getPlayer().level.isClientSide() || event.getPlayer() == null && EffectiveSide.get() == LogicalSide.CLIENT)
+        if (event.getPlayer() != null && event.getPlayer().level().isClientSide() || event.getPlayer() == null && EffectiveSide.get() == LogicalSide.CLIENT)
         {
             return;
         }
@@ -57,7 +57,7 @@ public class EventHandler
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onAnvilOutput(final AnvilRepairEvent event)
     {
-        if (event.getEntity() != null && event.getEntity().level.isClientSide() || event.getEntity() == null && EffectiveSide.get() == LogicalSide.CLIENT)
+        if (event.getEntity() != null && event.getEntity().level().isClientSide() || event.getEntity() == null && EffectiveSide.get() == LogicalSide.CLIENT)
         {
             return;
         }
@@ -68,7 +68,7 @@ public class EventHandler
               EnchantmentHelper.getEnchantments(event.getLeft()),
               EnchantmentHelper.getEnchantments(event.getOutput())))
             {
-                if (event.getEntity() != null && !event.getEntity().level.isClientSide())
+                if (event.getEntity() != null && !event.getEntity().level().isClientSide())
                 {
                     event.getEntity().containerMenu.broadcastChanges();
                     //((ServerPlayer) event.getPlayer()).refreshContainer(event.getPlayer().containerMenu);
@@ -104,7 +104,7 @@ public class EventHandler
     @SubscribeEvent
     public static void on(TickEvent.PlayerTickEvent event)
     {
-        if (event.player.level.isClientSide)
+        if (event.player.level().isClientSide)
         {
             if (Cursery.rand.nextInt(IllusionCurse.CHANCE) == 0)
             {
@@ -117,7 +117,7 @@ public class EventHandler
 
                     if (EnchantmentHelper.getItemEnchantmentLevel(Enchants.illusionCurse, armor) > 0)
                     {
-                        event.player.level.playLocalSound(event.player.getX() - 1,
+                        event.player.level().playLocalSound(event.player.getX() - 1,
                           event.player.getY(),
                           event.player.getZ(),
                           IllusionCurse.getRandomSound(),
@@ -157,7 +157,7 @@ public class EventHandler
                 final int level = EnchantmentHelper.getItemEnchantmentLevel(Enchants.undeadCurse, armor);
                 if (level > 0)
                 {
-                    if (event.player.level.isDay() && event.player.getLightLevelDependentMagicValue() > 9 && event.player.level.canSeeSky(event.player.blockPosition()))
+                    if (event.player.level().isDay() && event.player.getLightLevelDependentMagicValue() > 9 && event.player.level().canSeeSky(event.player.blockPosition()))
                     {
                         event.player.setSecondsOnFire(10 * level);
                     }
@@ -196,14 +196,14 @@ public class EventHandler
     @SubscribeEvent
     public static void on(BlockEvent.BreakEvent event)
     {
-        if (event.getPlayer() == null || event.getPlayer().level.isClientSide)
+        if (event.getPlayer() == null || event.getPlayer().level().isClientSide)
         {
             return;
         }
 
         if (Cursery.rand.nextInt(ExplosiveToolCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.explosiveToolCurse, event.getPlayer().getMainHandItem()) > 0)
         {
-            event.getPlayer().level.explode(null, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), 3, false, Level.ExplosionInteraction.TNT);
+            event.getPlayer().level().explode(null, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), 3, false, Level.ExplosionInteraction.TNT);
         }
 
         if (Cursery.rand.nextInt(LooseCurse.CHANCE) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchants.looseCurse, event.getPlayer().getMainHandItem()) > 0)
@@ -216,14 +216,14 @@ public class EventHandler
         if (level > 0 && Cursery.rand.nextInt(100) <= level)
         {
             BlockPos blockpos = event.getPlayer().blockPosition();
-            if (event.getPlayer().level.canSeeSky(blockpos))
+            if (event.getPlayer().level().canSeeSky(blockpos))
             {
-                LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(event.getPlayer().level);
+                LightningBolt lightningboltentity = EntityType.LIGHTNING_BOLT.create(event.getPlayer().level());
                 if (lightningboltentity != null)
                 {
                     lightningboltentity.moveTo(Vec3.atBottomCenterOf(blockpos));
                     lightningboltentity.setCause((ServerPlayer) event.getPlayer());
-                    event.getPlayer().level.addFreshEntity(lightningboltentity);
+                    event.getPlayer().level().addFreshEntity(lightningboltentity);
                 }
             }
         }
@@ -232,7 +232,7 @@ public class EventHandler
     @SubscribeEvent
     public static void on(ArrowLooseEvent event)
     {
-        if (event.getEntity() == null || event.getEntity().level.isClientSide)
+        if (event.getEntity() == null || event.getEntity().level().isClientSide)
         {
             return;
         }
@@ -261,7 +261,7 @@ public class EventHandler
     @SubscribeEvent
     public static void on(LivingFallEvent event)
     {
-        if (event.getEntity() == null || event.getEntity().level.isClientSide)
+        if (event.getEntity() == null || event.getEntity().level().isClientSide)
         {
             return;
         }

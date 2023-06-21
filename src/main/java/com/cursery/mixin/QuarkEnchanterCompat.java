@@ -25,7 +25,7 @@ public class QuarkEnchanterCompat
               CurseEnchantmentHelper.prevEnchants,
               EnchantmentHelper.getEnchantments(stack)))
             {
-                if (player != null && !player.level.isClientSide())
+                if (player != null && !player.level().isClientSide())
                 {
                     player.containerMenu.broadcastChanges();
                     //((ServerPlayer) event.getPlayer()).refreshContainer(event.getPlayer().containerMenu);
@@ -34,7 +34,7 @@ public class QuarkEnchanterCompat
             }
             else
             {
-                if (player != null && !player.level.isClientSide())
+                if (player != null && !player.level().isClientSide())
                 {
                     PlayerVisualHelper.enchantSuccess((ServerPlayer) player, stack);
                 }

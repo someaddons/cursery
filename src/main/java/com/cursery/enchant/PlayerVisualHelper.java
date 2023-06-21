@@ -40,7 +40,7 @@ public class PlayerVisualHelper
             double d0 = playerEntity.getRandom().nextGaussian() * 0.02D;
             double d1 = playerEntity.getRandom().nextGaussian() * 0.02D;
             double d2 = playerEntity.getRandom().nextGaussian() * 0.02D;
-            ((ServerLevel) playerEntity.level).sendParticles(particleData,
+            ((ServerLevel) playerEntity.level()).sendParticles(particleData,
               playerEntity.getRandomX(1.0D),
               playerEntity.getRandomY() + 1.0D,
               playerEntity.getRandomZ(1.0D),
