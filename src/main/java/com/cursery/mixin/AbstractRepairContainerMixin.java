@@ -26,7 +26,7 @@ public class AbstractRepairContainerMixin
     @Inject(method = "quickMoveStack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/Slot;hasItem()Z", shift = At.Shift.AFTER), allow = 1)
     public void test(final Player player, final int slotNum, final CallbackInfoReturnable<ItemStack> cir)
     {
-        if (player != null && !player.level.isClientSide() && slotNum == 2)
+        if (player != null && !player.level().isClientSide() && slotNum == 2)
         {
             ItemStack result = self.slots.get(slotNum).getItem();
             ItemStack input = inputSlots.getItem(0);
