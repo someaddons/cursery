@@ -60,11 +60,16 @@ public class CurseEnchantmentHelper
             return false;
         }
 
+        if (!previous.isEmpty() && Cursery.config.getCommonConfig().onlynotechanted)
+        {
+            return false;
+        }
+
         int levelSum = 0;
         // Sum all levels
         for (final Map.Entry<Enchantment, Integer> newEnchant : newEnchants.entrySet())
         {
-            if (!newEnchant.getKey().isCurse() && !(Cursery.config.getCommonConfig().excludeTreasure.get() && newEnchant.getKey().isTreasureOnly()))
+            if (!newEnchant.getKey().isCurse() && !(Cursery.config.getCommonConfig().excludeTreasure && newEnchant.getKey().isTreasureOnly()))
             {
                 levelSum += newEnchant.getValue();
             }
@@ -83,7 +88,7 @@ public class CurseEnchantmentHelper
             }
 
             // Skip treasure enchants if configured
-            if (Cursery.config.getCommonConfig().excludeTreasure.get() && newEnchant.getKey().isTreasureOnly())
+            if (Cursery.config.getCommonConfig().excludeTreasure && newEnchant.getKey().isTreasureOnly())
             {
                 continue;
             }
@@ -142,15 +147,15 @@ public class CurseEnchantmentHelper
         boolean appliedCurse = false;
         for (int i = 0; i < newLevel; i++)
         {
-            if (Cursery.config.getCommonConfig().debugTries.get())
+            if (Cursery.config.getCommonConfig().debugTries)
             {
                 Cursery.LOGGER.info("Rolling new curse for " + stack + " addedEnchLevels: " + newLevel + " totalEnchantLevels: " + levelSum + " chance:" + Math.min(75,
-                  Cursery.config.getCommonConfig().basecursechance.get() + levelSum - (stack.getEnchantmentValue() >> 1)));
+                  Cursery.config.getCommonConfig().basecursechance + levelSum - (stack.getEnchantmentValue() >> 1)));
             }
 
-            if (rand.nextInt(100) < Math.min(75, Cursery.config.getCommonConfig().basecursechance.get() + levelSum - (stack.getEnchantmentValue() >> 1)))
+            if (rand.nextInt(100) < Math.min(75, Cursery.config.getCommonConfig().basecursechance + levelSum - (stack.getEnchantmentValue() >> 1)))
             {
-                if (Cursery.config.getCommonConfig().debugTries.get())
+                if (Cursery.config.getCommonConfig().debugTries)
                 {
                     Cursery.LOGGER.info("Trying to apply curse to: " + stack);
                 }
@@ -166,7 +171,7 @@ public class CurseEnchantmentHelper
                     final int currentLevel = newEnchants.getOrDefault(curse, 0);
                     if (currentLevel < curse.getMaxLevel() && curse.canEnchant(stack) && isCompatibleWithAll(curse, newEnchants))
                     {
-                        if (Cursery.config.getCommonConfig().debugTries.get())
+                        if (Cursery.config.getCommonConfig().debugTries)
                         {
                             Cursery.LOGGER.info("Applying curse " + ForgeRegistries.ENCHANTMENTS.getKey(curse) + " to: " + stack);
                         }
@@ -196,7 +201,7 @@ public class CurseEnchantmentHelper
         {
             if (!entry.getKey().isCompatibleWith(enchantment))
             {
-                if (Cursery.config.getCommonConfig().debugTries.get())
+                if (Cursery.config.getCommonConfig().debugTries)
                 {
                     Cursery.LOGGER.info(
                       "Curse " + ForgeRegistries.ENCHANTMENTS.getKey(enchantment) + " is not compatible with " + ForgeRegistries.ENCHANTMENTS.getKey(entry.getKey()));
@@ -216,6 +221,11 @@ public class CurseEnchantmentHelper
      */
     private static Enchantment getRandomCurse()
     {
+        if (totalCurseWeight == 0)
+        {
+            return null;
+        }
+
         final int chosen = Cursery.rand.nextInt(totalCurseWeight);
         Enchantment curse = null;
         int currentWeight = 0;

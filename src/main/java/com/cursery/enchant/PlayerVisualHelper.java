@@ -26,7 +26,7 @@ public class PlayerVisualHelper
 
     public static void enchantSuccess(final ServerPlayer playerEntity, final ItemStack stack)
     {
-        if (Cursery.config.getCommonConfig().visualSuccess.get())
+        if (Cursery.config.getCommonConfig().visualSuccess)
         {
             playerEntity.playNotifySound(SoundEvents.PLAYER_LEVELUP, SoundSource.MASTER, 0.2f, 1.0f);
             addParticlesAround(ParticleTypes.HAPPY_VILLAGER, playerEntity);

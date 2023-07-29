@@ -1,54 +1,145 @@
 package com.cursery.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import com.cupboard.config.ICommonConfig;
+import com.cursery.Cursery;
+import com.cursery.enchant.CurseEnchantmentHelper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-public class CommonConfiguration
+import static com.cursery.enchant.CurseEnchantmentHelper.curseWeightMap;
+import static com.cursery.enchant.CurseEnchantmentHelper.totalCurseWeight;
+
+public class CommonConfiguration implements ICommonConfig
 {
-    public final ForgeConfigSpec.ConfigValue<List<? extends String>> excludedCUrses;
-    public final ForgeConfigSpec.ConfigValue<List<? extends String>> disabledItems;
-    public final ForgeConfigSpec.ConfigValue<Boolean>                excludeTreasure;
-    public final ForgeConfigSpec.ConfigValue<Boolean>                debugTries;
-    public final ForgeConfigSpec.ConfigValue<Boolean>                showDesc;
-    public final ForgeConfigSpec.ConfigValue<Boolean>                visualSuccess;
-    public final ForgeConfigSpec.ConfigValue<Integer>                basecursechance;
-    public final ForgeConfigSpec                                     ForgeConfigSpecBuilder;
+    public List<String> excludedCurses  = new ArrayList<>();
+    public boolean      excludeTreasure = false;
+    public boolean      debugTries      = false;
+    public boolean      showDesc        = true;
+    public boolean      visualSuccess   = true;
+    public boolean      onlynotechanted = false;
+    public int          basecursechance = 5;
 
-    protected CommonConfiguration(final ForgeConfigSpec.Builder builder)
+    public CommonConfiguration()
     {
-        builder.push("Cursery settings");
-        //COnfig: affect players or all entities
-        builder.comment("Should enchanted books show a hint for curse magic, default:true");
-        showDesc = builder.define("showDesc", true);
+        excludedCurses.add("minecraft:vanishing_curse");
+    }
 
-        builder.comment(
-          "Add a curse id here to exclude it from beeing applied. "
-            + "To put multiple values seperate them by commas like this:  [\"minecraft:curse\", \"mod:curse;\"] ");
-        excludedCUrses = builder.defineList("excludedCUrses",
-          List.of("minecraft:vanishing_curse")
-          , e -> e instanceof String && ((String) e).contains(":"));
+    public JsonObject serialize()
+    {
+        final JsonObject root = new JsonObject();
 
-        builder.comment("Should applying treasure enchants be excluded, default:false");
-        excludeTreasure = builder.define("excludeTreasure", false);
+        final JsonObject entry = new JsonObject();
+        entry.addProperty("desc:", "Should enchanted books show a hint for curse magic, default:true");
+        entry.addProperty("showDesc", showDesc);
+        root.add("showDesc", entry);
 
-        builder.comment("Base curse application chance, scales up the more enchants the item has. Default:5 %");
-        basecursechance = builder.defineInRange("basecursechance", 5, 1, 100);
+        final JsonObject entry1 = new JsonObject();
+        entry1.addProperty("desc:", "Add a curse id here to exclude it from beeing applied. "
+                                      + "To put multiple values seperate them by commas like this:  [\"minecraft:curse\", \"mod:curse;\"] ");
+        final JsonArray list1 = new JsonArray();
+        for (final String name : excludedCurses)
+        {
+            list1.add(name);
+        }
+        entry1.add("excludedCurses", list1);
+        root.add("excludedCurses", entry1);
 
-        builder.comment("Whether to log debug messages about curse rng beeing rolled, default = false");
-        debugTries = builder.define("debugTries", false);
+        final JsonObject entry2 = new JsonObject();
+        entry2.addProperty("desc:", "Should applying treasure enchants be excluded, default:false");
+        entry2.addProperty("excludeTreasure", excludeTreasure);
+        root.add("excludeTreasure", entry2);
 
-        builder.comment("List of items to disable, they get replaced by air e.g. [\"minecraft:elytra\"]");
-        disabledItems = builder.defineList("disabledItems",
-          Collections.EMPTY_LIST
-          , e -> e instanceof String && ((String) e).contains(":"));
+        final JsonObject entry7 = new JsonObject();
+        entry7.addProperty("desc:", "Should curses only be applied on enchanting unenchanted items, recommended to increase base chance when enabling, default:false");
+        entry7.addProperty("onlynotechanted", onlynotechanted);
+        root.add("onlynotechanted", entry7);
 
-        builder.comment("Should enchanting success play a sound and show particles, default:true");
-        visualSuccess = builder.define("visualSuccess", true);
+        final JsonObject entry3 = new JsonObject();
+        entry3.addProperty("desc:", "Base curse application chance, scales up the more enchants the item has. Default:5 %");
+        entry3.addProperty("basecursechance", basecursechance);
+        root.add("basecursechance", entry3);
 
-        // Escapes the current category level
-        builder.pop();
-        ForgeConfigSpecBuilder = builder.build();
+        final JsonObject entry4 = new JsonObject();
+        entry4.addProperty("desc:", "Whether to log debug messages about curse chances beeing rolled, default = false");
+        entry4.addProperty("debugTries", debugTries);
+        root.add("debugTries", entry4);
+
+        final JsonObject entry5 = new JsonObject();
+        entry5.addProperty("desc:", "Should enchanting success play a sound and show particles, default:true");
+        entry5.addProperty("visualSuccess", visualSuccess);
+        root.add("visualSuccess", entry5);
+
+        return root;
+    }
+
+    public void deserialize(JsonObject data)
+    {
+        showDesc = data.get("showDesc").getAsJsonObject().get("showDesc").getAsBoolean();
+        excludeTreasure = data.get("excludeTreasure").getAsJsonObject().get("excludeTreasure").getAsBoolean();
+        debugTries = data.get("debugTries").getAsJsonObject().get("debugTries").getAsBoolean();
+        visualSuccess = data.get("visualSuccess").getAsJsonObject().get("visualSuccess").getAsBoolean();
+        basecursechance = data.get("basecursechance").getAsJsonObject().get("basecursechance").getAsInt();
+        onlynotechanted = data.get("onlynotechanted").getAsJsonObject().get("onlynotechanted").getAsBoolean();
+        excludedCurses = new ArrayList<>();
+        for (final JsonElement element : data.get("excludedCurses").getAsJsonObject().get("excludedCurses").getAsJsonArray())
+        {
+            excludedCurses.add(element.getAsString());
+        }
+        parseConfig();
+    }
+
+    public void parseConfig()
+    {
+        curseWeightMap = new HashMap<>();
+        totalCurseWeight = 0;
+        final Set<Enchantment> excluded = new HashSet<>();
+        for (final String entry : Cursery.config.getCommonConfig().excludedCurses)
+        {
+            final ResourceLocation id = ResourceLocation.tryParse(entry);
+            if (id == null)
+            {
+                Cursery.LOGGER.error("Config entry could not be parsed, not a valid resource location " + entry);
+                continue;
+            }
+
+            final Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(id);
+            if (enchantment == null)
+            {
+                Cursery.LOGGER.error("Config entry could not be parsed, not a valid enchant" + entry);
+                continue;
+            }
+
+            excluded.add(enchantment);
+        }
+
+        // Parse registry entries
+        for (final Map.Entry<ResourceKey<Enchantment>, Enchantment> enchantmentEntry : ForgeRegistries.ENCHANTMENTS.getEntries())
+        {
+            if (enchantmentEntry.getValue().isCurse())
+            {
+                if (!excluded.contains(enchantmentEntry.getValue()))
+                {
+                    final int weight = CurseEnchantmentHelper.calculateWeightFor(enchantmentEntry.getValue());
+                    totalCurseWeight += weight;
+                    CurseEnchantmentHelper.curseWeightMap.put(enchantmentEntry.getValue(), weight);
+                }
+                else
+                {
+                    Cursery.LOGGER.info("Excluding curse: " + ForgeRegistries.ENCHANTMENTS.getKey(enchantmentEntry.getValue()) + " as config disables it");
+                }
+            }
+        }
+
+        if (totalCurseWeight == 0)
+        {
+            Cursery.LOGGER.error("Unable to retrieve curses from registry");
+        }
     }
 }

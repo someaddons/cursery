@@ -1,6 +1,7 @@
 package com.cursery;
 
-import com.cursery.config.Configuration;
+import com.cupboard.config.CupboardConfig;
+import com.cursery.config.CommonConfiguration;
 import com.cursery.enchant.Enchants;
 import com.cursery.event.ClientEventHandler;
 import com.cursery.event.EventHandler;
@@ -9,7 +10,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -26,14 +26,13 @@ public class Cursery
 {
     public static final String MODID = "cursery";
 
-    public static final Random        rand   = new Random();
-    public static final Logger        LOGGER = LogManager.getLogger();
-    public static       Configuration config = new Configuration();
+    public static final Random                              rand   = new Random();
+    public static final Logger                              LOGGER = LogManager.getLogger();
+    public static       CupboardConfig<CommonConfiguration> config = new CupboardConfig<>(MODID, new CommonConfiguration());
 
     public Cursery()
     {
         ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> "", (c, b) -> true));
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, config.getCommonConfig().ForgeConfigSpecBuilder);
         Mod.EventBusSubscriber.Bus.MOD.bus().get().register(ModEventHandler.class);
         Mod.EventBusSubscriber.Bus.FORGE.bus().get().register(EventHandler.class);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -49,7 +48,6 @@ public class Cursery
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        config.parseConfig();
         LOGGER.info("Cursery initialized");
     }
 }

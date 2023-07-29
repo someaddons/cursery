@@ -17,18 +17,19 @@ public class Enchants
       new EquipmentSlot[] {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     private static final EquipmentSlot[]               TOOLS_WEAPONS = new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND};
 
-    public static BlindCurse           blindEnchant;
-    public static HeavyCurse           heavyCurse;
-    public static ExplosiveToolCurse   explosiveToolCurse;
-    public static HurtfulCurse         hurtfulCurse;
-    public static HungryHealthCurse    hungryHealthCurse;
-    public static WeaknessCurse        weaknessCurse;
-    public static StubbyCurse          stubbyCurse;
-    public static RecoilCurse          recoilCurse;
-    public static LooseCurse           looseCurse;
-    public static AnvilHead            anvilHead;
-    public static HungryCurse          hungryCurse;
-    public static UndeadCurse          undeadCurse;
+    public static BlindCurse         blindEnchant;
+    public static DullWeaponCurse    dullCurse;
+    public static HeavyCurse         heavyCurse;
+    public static ExplosiveToolCurse explosiveToolCurse;
+    public static HurtfulCurse       hurtfulCurse;
+    public static HungryHealthCurse  hungryHealthCurse;
+    public static WeaknessCurse      weaknessCurse;
+    public static StubbyCurse        stubbyCurse;
+    public static RecoilCurse        recoilCurse;
+    public static LooseCurse         looseCurse;
+    public static AnvilHead          anvilHead;
+    public static HungryCurse        hungryCurse;
+    public static UndeadCurse        undeadCurse;
     public static PoisonCurse          poisonCurse;
     public static SwitchyWeaponCurse   switchyWeaponCurse;
     public static IllusionCurse        illusionCurse;
@@ -96,5 +97,8 @@ public class Enchants
 
         electrifiedToolCurse = new ElectrifiedToolCurse(Enchantment.Rarity.UNCOMMON, TOOLS_WEAPONS);
         ENCHANTMENTS.register(ElectrifiedToolCurse.NAME_ID, () -> electrifiedToolCurse);
+
+        dullCurse = new DullWeaponCurse(Enchantment.Rarity.COMMON, TOOLS_WEAPONS);
+        ENCHANTMENTS.register(DullWeaponCurse.NAME_ID, () -> dullCurse);
     }
 }

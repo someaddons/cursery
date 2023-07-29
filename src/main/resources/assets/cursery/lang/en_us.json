@@ -37,6 +37,8 @@
   "enchantment.cursery.curse_slowness.desc": "Breaking blocks is slower",
   "enchantment.cursery.curse_electrified": "Electrified",
   "enchantment.cursery.curse_electrified.desc": "Chance to sap you on usage",
+  "enchantment.cursery.curse_dull.desc": "Reduced attack damage",
+  "enchantment.cursery.curse_dull": "Dull",
   "enchanted_book.desc": "You feel a slight presence of dark curse magic",
   "enchanted_book_cursed.desc": "There is strong curse magic present",
   "enchanted_table.desc": "Curse magic seems to have tainted the table",

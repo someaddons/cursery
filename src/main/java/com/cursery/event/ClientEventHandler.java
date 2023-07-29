@@ -20,7 +20,7 @@ public class ClientEventHandler
     @SubscribeEvent
     public static void on(ItemTooltipEvent event)
     {
-        if (!Cursery.config.getCommonConfig().showDesc.get())
+        if (!Cursery.config.getCommonConfig().showDesc)
         {
             return;
         }
@@ -35,7 +35,7 @@ public class ClientEventHandler
                     return;
                 }
 
-                if (!(entry.getKey().isTreasureOnly() && Cursery.config.getCommonConfig().excludeTreasure.get()))
+                if (!(entry.getKey().isTreasureOnly() && Cursery.config.getCommonConfig().excludeTreasure))
                 {
                     event.getToolTip().add(Component.translatable("enchanted_book.desc").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE)));
                     return;
